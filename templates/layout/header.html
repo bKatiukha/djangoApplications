@@ -1,0 +1,22 @@
+{% load static %}
+{% load shared_tags %}
+<header class="header">
+    <div class="main-content">
+        <div class="logo">
+            <img class="logo-img" src="{% static 'shared/images/logo1.png' %}" alt="logo" />
+            <span class="logo-text">LOGO</span>
+        </div>
+        <div class="navigation">
+            {% main_navigation %}
+        </div>
+        <div class="auth-header-info">
+            {% if request.user.is_authenticated %}
+                {{ user.username }} |
+                <a href="{% url 'logout' %}">LogOut</a>
+            {% else %}
+                <a href="{% url 'register' %}">registration</a> |
+                <a href="{% url 'login' %}">login</a>
+            {% endif %}
+        </div>
+    </div>
+</header>

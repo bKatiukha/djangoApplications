@@ -1,0 +1,7 @@
+{% macro dialog(title='', content='', closeBtnText='Close') %}
+    <div class="dialog">
+        <div> {{ title }} </div>
+        <div> {{ content }} </div>
+        <button> {{ closeBtnText }} </button>
+    </div>
+{% endmacro %}

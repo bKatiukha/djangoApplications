@@ -1,0 +1,24 @@
+{% extends 'layout/main.html' %}
+
+{% block pageTitle %} jinja page title {% endblock %}
+{% block header %}
+    {% include 'layout/header.html' %} {#ignore load file if mot exist#}
+{% endblock header %}
+
+{% block content %}
+    {% block navigation %} navigation.super {{ navigation.super }} {% endblock navigation %}
+    {% block item %}
+        <div>custom styles {{ navigation.super }} </div>
+    {% endblock item %}
+
+    {% include 'jinja/content.html' %}
+{% endblock content %}
+
+
+{% block footer %}
+    {% if footer.super %}
+        {{ footer.super }}
+    {% else %}
+        {% include 'layout/footer.html' %}
+    {% endif %}
+{% endblock footer %}

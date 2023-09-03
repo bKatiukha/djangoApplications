@@ -1,0 +1,35 @@
+{% extends 'layout/main.html' %}
+
+{% block pageTitle %} {{ title }} {% endblock %}
+{% block header %}
+    {% include 'layout/header.html' %} {#ignore load file if mot exist#}
+{% endblock header %}
+
+{% block content %}
+    <div class="main-container">
+        <form class="custom-form" method="post">
+            {% csrf_token %}
+            <div class="form-title">Login</div>
+            <div class="form-error non-field-errors">{{ form.non_field_errors }}</div>
+            {% for f in form %}
+                <div class="form-field">
+                    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
+                    {{ f }}
+                    <div class="form-error">{{ f.errors }}</div>
+                </div>
+            {% endfor %}
+
+            <button class="custom-button" type="submit"> Login </button>
+        </form>
+    </div>
+
+{% endblock content %}
+
+
+{% block footer %}
+    {% if footer.super %}
+        {{ footer.super }}
+    {% else %}
+        {% include 'layout/footer.html' %}
+    {% endif %}
+{% endblock footer %}

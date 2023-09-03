@@ -1,0 +1,17 @@
+.footer {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #0a1d49;
+  color: white;
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .logo-img {
+    height: 60px;
+  }
+  .logo-text {
+    font-size: 30px;
+  }
+}
