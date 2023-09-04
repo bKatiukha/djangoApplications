@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from blog.models import Category, Post
+from src.blog.models import Category, Post
 
 
 class CustomAddPostForm(forms.Form):

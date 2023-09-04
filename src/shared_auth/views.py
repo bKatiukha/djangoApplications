@@ -4,8 +4,8 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from blog.utils import DataMixin
-from sharedTemplateTags.forms import RegisterUserForm, LoginUserForm
+from src.blog.utils import DataMixin
+from .forms import *
 
 
 class RegisterUserPage(DataMixin, CreateView):

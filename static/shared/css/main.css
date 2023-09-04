@@ -74,9 +74,6 @@ a:hover, a:active, a:focus {
       display: block;
       font-weight: 500;
       margin-bottom: 4px; }
-    .custom-form .form-field textarea {
-      font-size: 18px;
-      padding: 20px; }
     .custom-form .form-field input[type='text'], .custom-form .form-field select, .custom-form .form-field input[type='password'] {
       height: 42px;
       font-size: 18px; }
@@ -88,6 +85,9 @@ a:hover, a:active, a:focus {
       padding: 0 20px; }
       .custom-form .form-field input[type='text']:focus, .custom-form .form-field input[type='text']:active, .custom-form .form-field input[type='text']:hover, .custom-form .form-field input[type='password']:focus, .custom-form .form-field input[type='password']:active, .custom-form .form-field input[type='password']:hover, .custom-form .form-field textarea:focus, .custom-form .form-field textarea:active, .custom-form .form-field textarea:hover, .custom-form .form-field select:focus, .custom-form .form-field select:active, .custom-form .form-field select:hover {
         border-color: #4d1a7c; }
+    .custom-form .form-field textarea {
+      font-size: 18px;
+      padding: 20px; }
     .custom-form .form-field input[type='file']::file-selector-button {
       background-color: #7845ac;
       color: white;

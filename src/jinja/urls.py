@@ -1,8 +1,8 @@
 from django.urls import path
 from django.conf.urls.static import static
-from djangoApplications import settings
+from app_config import settings
 
-from jinja.views import jinja
+from .views import *
 
 urlpatterns = [
     path('', jinja, name='jinja'),

@@ -1,3 +1,7 @@
+from django import template
+
+register = template.Library()
+
 NAVIGATION_ITEMS = [
     {
         'title': 'blog',
@@ -16,3 +20,10 @@ NAVIGATION_ITEMS = [
         'routerLink': 'jinja'
     }
 ]
+
+
+@register.inclusion_tag('shared/main_navigation.html')
+def main_navigation():
+    return {"navItems": NAVIGATION_ITEMS}
+
+

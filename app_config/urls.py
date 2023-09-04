@@ -1,5 +1,5 @@
 """
-URL configuration for djangoApplications project.
+URL configuration for app_config project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -16,12 +16,12 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include, reverse_lazy
+from django.urls import path, include
 from django.views.generic import RedirectView
 
-from blog.views import page_not_found
-from djangoApplications import settings
-from sharedTemplateTags.views import LoginUserPage, RegisterUserPage, logout_user
+from app_config import settings
+from src.blog.views import page_not_found
+from src.shared_auth.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
@@ -29,8 +29,8 @@ urlpatterns = [
     path('login/', LoginUserPage.as_view(), name='login'),
     path('register/', RegisterUserPage.as_view(), name='register'),
     path('logout/', logout_user, name='logout'),
-    path('blog/', include('blog.urls'), name='blog'),
-    path('jinja/', include('jinja.urls'), name='jinja'),
+    path('blog/', include('src.blog.urls'), name='blog'),
+    path('jinja/', include('src.jinja.urls'), name='jinja'),
 ]
 
 if settings.DEBUG:

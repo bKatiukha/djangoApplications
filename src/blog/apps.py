@@ -1,6 +1,7 @@
 from django.apps import AppConfig
 
 
-class SharedTemplateTagsConfig(AppConfig):
+class BlogConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'sharedTemplateTags'
+    name = 'src.blog'
+    verbose_name = 'Blog'
