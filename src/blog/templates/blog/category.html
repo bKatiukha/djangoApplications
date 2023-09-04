@@ -1,0 +1,36 @@
+{% extends 'blog/main.html' %}
+{% load blog_tags %}
+
+
+{% block blog-content %}
+    <div class="blog-page">
+        {% for post in posts %}
+            <div class="blog-page-post">
+                <div class="blog-page-post__info">
+                    {% if post.photo %}
+                        <div class="blog-page-post__img">
+                            <img alt="post img" src="{{post.photo.url|safe}}"/>
+                        </div>
+                    {% endif %}
+                    <div class="blog-page-post__text">
+                        <div class="blog-page-post__title">{{ post.title|safe }}</div>
+                        {{ post.content|linebreaks|truncatewords:75|safe }}
+                        <div class="blog-page-post__btn">
+                            <a href="{{ post.get_absolute_url }}">
+                                <button class="custom-button">
+                                 Read more
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="blog-page-post__additional-info">
+                    <div>Category: {{ post.category__name|safe }}</div>
+                    <div>Date added: {{ post.time_update|date:"Y-m-d"|safe }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock blog-content  %}
+

@@ -1,0 +1,53 @@
+{% extends 'layout/main.html' %}
+{% load static sass_tags blog_tags %}
+
+{% block headTags %}
+    <link href="{% sass_src 'blog/css/main.scss' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+
+{% block pageTitle %}
+    {% if title %}
+        {{ title }}
+    {% else %}
+        default title
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="blog-container">
+        <div>
+            <div class="blog_sidebar">
+                <div class="blog_sidebar-navigation">
+                    <div class=" {% if category_selected == 'all' %} active {% endif %} blog_sidebar-navigation-itm"
+                    >
+                        <a href="{% url 'blog' %}">All posts</a>
+                    </div>
+                    {% for category in categories %}
+                        <div
+                            class="{% if category_selected == category.slug %} active {% endif %} blog_sidebar-navigation-itm"
+                        >
+                            <a href="{{ category.get_absolute_url }}">{{category.name}}</a>
+                        </div>
+                    {% endfor %}
+                    <div class=" {% if category_selected == 'form_view_add_post' %} active {% endif %} blog_sidebar-navigation-itm"
+                    >
+                        <a href="{% url 'form_view_add_post' %}">FormView add post</a>
+                    </div>
+                    <div class=" {% if category_selected == 'add_post' %} active {% endif %} blog_sidebar-navigation-itm"
+                    >
+                        <a href="{% url 'add_post' %}">Add post</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="blog-content">
+            {% include 'blog/paginator.html' %}
+            {% block blog-content %}
+            {% endblock blog-content %}
+            {% include 'blog/paginator.html' %}
+        </div>
+    </div>
+
+{% endblock content %}

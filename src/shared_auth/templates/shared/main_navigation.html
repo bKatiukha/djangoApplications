@@ -1,0 +1,5 @@
+{% for navItem in navItems %}
+    <div>
+        <a href="{% url navItem.routerLink %}" >{{ navItem.title }}</a>
+    </div>
+{% endfor %}

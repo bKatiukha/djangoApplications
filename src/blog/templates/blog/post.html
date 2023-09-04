@@ -1,0 +1,21 @@
+{% extends 'blog/main.html' %}
+{% load blog_tags %}
+
+{% block blog-content %}
+    <div class="post-page">
+        <h1 class="post-page__title">{{post.title}}</h1>
+        {% if post.photo %}
+            <div class="post-page__img">
+                <img src="{{post.photo.url|safe}}" alt="post img">
+            </div>
+        {% endif %}
+        <div class="post-page__content">
+            {{ post.content|linebreaks|safe }}
+        </div>
+        <div class="post-page__additional-info">
+            <div>Category: {{ post.category__name|safe }}</div>
+            <div>Date added: {{ post.time_update|date:"Y-m-d"|safe }}</div>
+        </div>
+    </div>
+
+{% endblock blog-content %}

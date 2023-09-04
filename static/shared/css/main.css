@@ -1,0 +1,123 @@
+body {
+  margin: 0;
+  font-size: 16px;
+  color: #0a1d49;
+  background-color: #eff5ff;
+  font-family: 'Roboto', 'Montserrat', sans-serif; }
+
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px; }
+
+.main-container {
+  display: flex;
+  margin-top: 60px;
+  margin-bottom: 60px; }
+
+.logo {
+  display: flex;
+  align-items: center; }
+  .logo .logo-img {
+    height: 80px; }
+  .logo .logo-text {
+    font-weight: bolder;
+    color: #7845ac;
+    font-size: 40px; }
+
+a {
+  color: #0a1d49; }
+
+a:hover, a:active, a:focus {
+  color: #223d7c; }
+
+.custom-button {
+  text-decoration: none;
+  border: none;
+  text-align: center;
+  font-family: 'Montserrat';
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+  letter-spacing: 0.8px;
+  min-width: 210px;
+  padding: 22px 75px;
+  height: 60px;
+  border-radius: 10px;
+  color: white;
+  background-color: #7845ac;
+  transition: background-color .2s ease-in; }
+  .custom-button:focus, .custom-button:active, .custom-button:hover {
+    outline: none;
+    background-color: #4d1a7c; }
+  .custom-button a, .custom-button a:focus, .custom-button a:active, .custom-button a:hover {
+    color: inherit;
+    text-decoration: none; }
+
+.blog-content {
+  width: 100%; }
+
+.custom-form {
+  font-family: 'Montserrat', sans-serif;
+  max-width: 500px;
+  margin: auto; }
+  .custom-form .form-title {
+    font-size: 30px;
+    text-align: center;
+    font-weight: 800;
+    margin-bottom: 30px; }
+  .custom-form .form-field {
+    margin: 20px auto 0; }
+    .custom-form .form-field .form-label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 4px; }
+    .custom-form .form-field input[type='text'], .custom-form .form-field select, .custom-form .form-field input[type='password'] {
+      height: 42px;
+      font-size: 18px; }
+    .custom-form .form-field input[type='text'], .custom-form .form-field input[type='password'], .custom-form .form-field textarea, .custom-form .form-field select {
+      background-color: #f8f8f873;
+      border: 2px solid #7845ac;
+      border-radius: 10px;
+      min-width: 280px;
+      padding: 0 20px; }
+      .custom-form .form-field input[type='text']:focus, .custom-form .form-field input[type='text']:active, .custom-form .form-field input[type='text']:hover, .custom-form .form-field input[type='password']:focus, .custom-form .form-field input[type='password']:active, .custom-form .form-field input[type='password']:hover, .custom-form .form-field textarea:focus, .custom-form .form-field textarea:active, .custom-form .form-field textarea:hover, .custom-form .form-field select:focus, .custom-form .form-field select:active, .custom-form .form-field select:hover {
+        border-color: #4d1a7c; }
+    .custom-form .form-field textarea {
+      font-size: 18px;
+      padding: 20px; }
+    .custom-form .form-field input[type='file']::file-selector-button {
+      background-color: #7845ac;
+      color: white;
+      border: none;
+      transition: background-color .2s ease-in;
+      border-radius: 4px;
+      padding: 4px 10px;
+      cursor: pointer; }
+      .custom-form .form-field input[type='file']::file-selector-button:focus, .custom-form .form-field input[type='file']::file-selector-button:active, .custom-form .form-field input[type='file']::file-selector-button:hover {
+        border: none;
+        background-color: #4d1a7c; }
+    .custom-form .form-field input[type='checkbox'] {
+      margin-top: 8px;
+      transform: scale(2);
+      accent-color: #7845ac;
+      padding: 10px; }
+  .custom-form .custom-button {
+    display: block;
+    margin: 30px auto 0;
+    width: 100%; }
+  .custom-form .form-error {
+    color: red;
+    font-size: 14px;
+    font-weight: 500; }
+    .custom-form .form-error .errorlist {
+      list-style: none;
+      margin: 0;
+      padding: 0; }
+  .custom-form .form-error.non-field-errors {
+    font-size: 16px;
+    margin: 30px; }
+
+/*# sourceMappingURL=main.css.map */
