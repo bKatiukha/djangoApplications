@@ -18,11 +18,15 @@
     <title> {% block pageTitle %} {% endblock %} </title>
 </head>
 <body>
-    {% block header %}{% endblock header %}
+    {% block header %}
+        {% include 'layout/header.html' %}
+    {% endblock header %}
     <div class="main-content">
         {% block content %}{% endblock content %}
     </div>
 
-    {% block footer %}{% endblock footer %}
+    {% block footer %}
+        {% include 'layout/footer.html' %}
+    {% endblock footer %}
 </body>
 </html>

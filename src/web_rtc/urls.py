@@ -5,7 +5,7 @@ from app_config import settings
 from .views import *
 
 urlpatterns = [
-    path('', jinja, name='jinja'),
+    path('', web_rtc, name='web_rtc'),
 ]
 
 if settings.DEBUG:

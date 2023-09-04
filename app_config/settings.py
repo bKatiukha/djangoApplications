@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'sass_processor',
 
     'src.blog',
-    'src.jinja',
+    'src.web_rtc',
     'src.shared_auth',
 ]
 
@@ -62,7 +62,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
-            os.path.join(BASE_DIR, 'src/jinja', 'templates'),
             os.path.join(BASE_DIR, 'src/blog', 'templates'),
             os.path.join(BASE_DIR, 'src/shared_auth', 'templates'),
         ],

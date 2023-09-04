@@ -4,20 +4,20 @@ register = template.Library()
 
 NAVIGATION_ITEMS = [
     {
-        'title': 'blog',
+        'title': 'Blog',
         'routerLink': 'blog'
     },
     {
-        'title': 'blog',
+        'title': 'Blog',
         'routerLink': 'blog'
     },
     {
-        'title': 'jinja',
-        'routerLink': 'jinja'
+        'title': 'WebRTC',
+        'routerLink': 'web_rtc'
     },
     {
-        'title': 'jinja',
-        'routerLink': 'jinja'
+        'title': 'WebRTC',
+        'routerLink': 'web_rtc'
     }
 ]
 

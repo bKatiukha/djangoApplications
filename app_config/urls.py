@@ -30,7 +30,7 @@ urlpatterns = [
     path('register/', RegisterUserPage.as_view(), name='register'),
     path('logout/', logout_user, name='logout'),
     path('blog/', include('src.blog.urls'), name='blog'),
-    path('jinja/', include('src.jinja.urls'), name='jinja'),
+    path('web_rtc/', include('src.web_rtc.urls'), name='web_rtc'),
 ]
 
 if settings.DEBUG:

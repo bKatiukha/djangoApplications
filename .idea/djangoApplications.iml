@@ -14,16 +14,30 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="PyNamespacePackagesService">
+    <option name="namespacePackageFolders">
+      <list>
+        <option value="$MODULE_DIR$/src/blog" />
+        <option value="$MODULE_DIR$/src/shared_auth" />
+        <option value="$MODULE_DIR$/src/web_rtc" />
+        <option value="$MODULE_DIR$/app_config" />
+      </list>
+    </option>
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/templates" />
+        <option value="$MODULE_DIR$/src/blog/templates" />
+        <option value="$MODULE_DIR$/src/shared_auth/templates" />
+        <option value="$MODULE_DIR$/src/web_rtc/templates" />
       </list>
     </option>
   </component>

@@ -2,25 +2,6 @@ from django.db.models import Count, Q
 
 from .models import Category
 
-NAVIGATION_ITEMS = [
-    {
-        'title': 'blog',
-        'routerLink': 'blog'
-    },
-    {
-        'title': 'blog',
-        'routerLink': 'blog'
-    },
-    {
-        'title': 'jinja',
-        'routerLink': 'jinja'
-    },
-    {
-        'title': 'jinja',
-        'routerLink': 'jinja'
-    }
-]
-
 
 class DataMixin:
     paginate_by = 4

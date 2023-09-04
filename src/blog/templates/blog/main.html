@@ -13,9 +13,6 @@
         default title
     {% endif %}
 {% endblock %}
-{% block header %}
-    {% include 'layout/header.html' %} {#ignore load file if mot exist#}
-{% endblock header %}
 
 
 {% block content %}
@@ -54,12 +51,3 @@
     </div>
 
 {% endblock content %}
-
-
-{% block footer %}
-    {% if footer.super %}
-        {{ footer.super }}
-    {% else %}
-        {% include 'layout/footer.html' %}
-    {% endif %}
-{% endblock footer %}
