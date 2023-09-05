@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-xgipj1$k6b1hdq39xnby)l3=%a+@w8^4qjh#-d^9%^$y_9d%^z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', "localhost"]
 
 
 # Application definition
@@ -38,11 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'sass_processor',
-
     'src.blog',
     'src.web_rtc',
     'src.shared_auth',
+
+    'sass_processor',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +65,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'templates'),
             os.path.join(BASE_DIR, 'src/blog', 'templates'),
             os.path.join(BASE_DIR, 'src/shared_auth', 'templates'),
+            os.path.join(BASE_DIR, 'src/web_rtc', 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -84,7 +86,7 @@ STATICFILES_FINDERS = [
 ]
 
 WSGI_APPLICATION = 'app_config.wsgi.application'
-
+ASGI_APPLICATION = "app_config.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -135,6 +137,7 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     BASE_DIR / 'src/blog/static',
+    BASE_DIR / 'src/web_rtc/static',
 ]
 
 SASS_PROCESSOR_ROOT = STATIC_ROOT
@@ -147,3 +150,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 LOGOUT_REDIRECT_URL = ''
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}

@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box; }
+
 body {
   margin: 0;
   font-size: 16px;
@@ -63,61 +66,68 @@ a:hover, a:active, a:focus {
   font-family: 'Montserrat', sans-serif;
   max-width: 500px;
   margin: auto; }
-  .custom-form .form-title {
-    font-size: 30px;
-    text-align: center;
-    font-weight: 800;
-    margin-bottom: 30px; }
-  .custom-form .form-field {
-    margin: 20px auto 0; }
-    .custom-form .form-field .form-label {
-      display: block;
-      font-weight: 500;
-      margin-bottom: 4px; }
-    .custom-form .form-field input[type='text'], .custom-form .form-field select, .custom-form .form-field input[type='password'] {
-      height: 42px;
-      font-size: 18px; }
-    .custom-form .form-field input[type='text'], .custom-form .form-field input[type='password'], .custom-form .form-field textarea, .custom-form .form-field select {
-      background-color: #f8f8f873;
-      border: 2px solid #7845ac;
-      border-radius: 10px;
-      min-width: 280px;
-      padding: 0 20px; }
-      .custom-form .form-field input[type='text']:focus, .custom-form .form-field input[type='text']:active, .custom-form .form-field input[type='text']:hover, .custom-form .form-field input[type='password']:focus, .custom-form .form-field input[type='password']:active, .custom-form .form-field input[type='password']:hover, .custom-form .form-field textarea:focus, .custom-form .form-field textarea:active, .custom-form .form-field textarea:hover, .custom-form .form-field select:focus, .custom-form .form-field select:active, .custom-form .form-field select:hover {
-        border-color: #4d1a7c; }
-    .custom-form .form-field textarea {
-      font-size: 18px;
-      padding: 20px; }
-    .custom-form .form-field input[type='file']::file-selector-button {
-      background-color: #7845ac;
-      color: white;
-      border: none;
-      transition: background-color .2s ease-in;
-      border-radius: 4px;
-      padding: 4px 10px;
-      cursor: pointer; }
-      .custom-form .form-field input[type='file']::file-selector-button:focus, .custom-form .form-field input[type='file']::file-selector-button:active, .custom-form .form-field input[type='file']::file-selector-button:hover {
-        border: none;
-        background-color: #4d1a7c; }
-    .custom-form .form-field input[type='checkbox'] {
-      margin-top: 8px;
-      transform: scale(2);
-      accent-color: #7845ac;
-      padding: 10px; }
   .custom-form .custom-button {
     display: block;
     margin: 30px auto 0;
     width: 100%; }
-  .custom-form .form-error {
-    color: red;
-    font-size: 14px;
-    font-weight: 500; }
-    .custom-form .form-error .errorlist {
-      list-style: none;
-      margin: 0;
-      padding: 0; }
-  .custom-form .form-error.non-field-errors {
-    font-size: 16px;
-    margin: 30px; }
+
+input {
+  box-sizing: border-box; }
+
+.form-title {
+  font-size: 30px;
+  text-align: center;
+  font-weight: 800;
+  margin-bottom: 30px; }
+
+.form-field {
+  margin: 20px auto 0; }
+  .form-field .form-label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 4px; }
+  .form-field input[type='text'], .form-field select, .form-field input[type='password'] {
+    height: 42px;
+    font-size: 18px; }
+  .form-field input[type='text'], .form-field input[type='password'], .form-field textarea, .form-field select {
+    background-color: #f8f8f873;
+    border: 2px solid #7845ac;
+    border-radius: 10px;
+    min-width: 280px;
+    padding: 0 20px; }
+    .form-field input[type='text']:focus, .form-field input[type='text']:active, .form-field input[type='text']:hover, .form-field input[type='password']:focus, .form-field input[type='password']:active, .form-field input[type='password']:hover, .form-field textarea:focus, .form-field textarea:active, .form-field textarea:hover, .form-field select:focus, .form-field select:active, .form-field select:hover {
+      border-color: #4d1a7c; }
+  .form-field textarea {
+    font-size: 18px;
+    padding: 20px; }
+  .form-field input[type='file']::file-selector-button {
+    background-color: #7845ac;
+    color: white;
+    border: none;
+    transition: background-color .2s ease-in;
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer; }
+    .form-field input[type='file']::file-selector-button:focus, .form-field input[type='file']::file-selector-button:active, .form-field input[type='file']::file-selector-button:hover {
+      border: none;
+      background-color: #4d1a7c; }
+  .form-field input[type='checkbox'] {
+    margin-top: 8px;
+    transform: scale(2);
+    accent-color: #7845ac;
+    padding: 10px; }
+
+.form-error {
+  color: red;
+  font-size: 14px;
+  font-weight: 500; }
+  .form-error .errorlist {
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+
+.form-error.non-field-errors {
+  font-size: 16px;
+  margin: 30px; }
 
 /*# sourceMappingURL=main.css.map */

@@ -1,8 +1,96 @@
 {% extends 'layout/main.html' %}
+{% load sass_tags static %}
 
-{% block pageTitle %} {{ title }} {% endblock %}
+{% block pageTitle %} {{ title }} {% endblock pageTitle %}
+
+{% block headTags %}
+    <link href="{% sass_src 'web_rtc/css/web_rtc.scss' %}" rel="stylesheet" type="text/css"/>
+    <script>
+        let myName;
+    </script>
+{% endblock headTags %}
 
 {% block content %}
-    web rtc page
+    <div class="web_rtc-content">
+
+
+        <!-- to input username and login -->
+        <div class="user-name-block" id="userName">
+            <div>
+                <div class="form-field">
+                    <label class="form-label" for="userName">Input your name</label>
+                    <input placeholder="name" type="text" name="userName" id="userNameInput">
+                </div>
+                <button onclick="login()" class="custom-button">Login</button>
+            </div>
+        </div>
+
+
+        <!-- to make a call with name -->
+        <div id="call">
+            <div class="user-name-block">
+                <div class="form-field">
+                    <label class="form-label" for="calleeName">
+                        Hello, <span id="userNameText"></span>,
+                        whom to call?
+                    </label>
+                    <input placeholder="Callee name" type="text" name="calleeName" id="calleeName">
+                </div>
+                <button class="custom-button" onclick="call()">Call</button>
+            </div>
+        </div>
+
+
+        <!-- to show incoming call and accept -->
+        <div id="answer">
+            <div class="calling-block">
+                <div class="">
+                    <h2>Incoming Call</h2>
+                </div>
+                <div class="">
+                    <h2><span id="callerNameText"></span></h2>
+                </div>
+                <div class="buttons">
+                    <img onclick="declineCall()" alt="decline" src="{% static 'shared/images/decline.png' %}"/>
+                    <img onclick="answer()" alt="answer" src="{% static 'shared/images/answer.png' %}"/>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- to show outgoing call -->
+        <div id="calling">
+            <div class="calling-block">
+                <div class="">
+                    <h2>Calling</h2>
+                </div>
+                <div class="">
+                    <h3><span id="calleeNameText"></span></h3>
+                </div>
+                <div class="buttons">
+                    <img onclick="declineCall()" alt="decline" src="{% static 'shared/images/decline.png' %}"/>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- to show call in progress call -->
+        <div id="inCall" class="in-call-title">
+            On Call With
+            <span id="otherUserNameCall"></span>
+        </div>
+
+
+        <!-- to show local and remote video -->
+        <div id="videos" class="video-block">
+            <video class="local-video" width="100px" id="localVideo" autoplay playsinline></video>
+            <video class="remote-video" id="remoteVideo" autoplay playsinline></video>
+            <img onclick="stop()" alt="decline" src="{% static 'shared/images/decline.png' %}"/>
+        </div>
+    </div>
 {% endblock content %}
 
+
+{% block scripts %}
+    <script src="{% static 'web_rtc/js/web_rtc.js' %}"></script>
+{% endblock scripts %}
