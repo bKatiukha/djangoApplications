@@ -1,0 +1,61 @@
+{% extends 'shared/main.html' %}
+{% load static %}
+
+{% block shared_auth_content %}
+    <form class="custom-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-title"> Edit profile </div>
+        <div class="form-error non-field-errors">{{ user_form.non_field_errors }}</div>
+        <div class="form-error non-field-errors">{{ profile_form.non_field_errors }}</div>
+
+        <div class="edit-user-avatar-form">
+            <label class="form-label avatar-label" for="{{ profile_form.avatar.id_for_label }}">{{ profile_form.avatar.label }}
+                {{ profile_form.avatar }}
+                <div class="image-preview">
+                    <img id="image-preview"
+                         {% if profile_form.instance.avatar %}
+                            src="{{ profile_form.instance.avatar.url }}"
+                         {% else %}
+                            src="{% static 'shared/images/default-avatar.png' %}"
+                         {% endif %}
+                         alt="Зображення">
+                </div>
+            </label>
+        </div>
+
+
+
+        {% for f in user_form %}
+            <div class="form-field">
+                <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
+                {{ f }}
+                <div class="form-error">{{ f.errors }}</div>
+            </div>
+        {% endfor %}
+
+        <button class="custom-button" type="submit"> Edit </button>
+    </form>
+
+
+
+    <script>
+        document.getElementById('id_avatar').addEventListener('change', function () {
+        var preview = document.getElementById('image-preview');
+        var fileInput = document.getElementById('id_avatar');
+        var file = fileInput.files[0];
+
+        if (file) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "{% static 'images/default_image.png' %}";
+        }
+    });
+    </script>
+{% endblock shared_auth_content %}

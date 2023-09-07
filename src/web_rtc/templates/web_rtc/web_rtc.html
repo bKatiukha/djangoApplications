@@ -93,4 +93,9 @@
 
 {% block scripts %}
     <script src="{% static 'web_rtc/js/web_rtc.js' %}"></script>
+    <script>
+        {% if user.username %}
+            login('{{ user.username }}')
+        {% endif %}
+    </script>
 {% endblock scripts %}

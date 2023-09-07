@@ -31,8 +31,12 @@ let pcConfig = {
 };
 
 
-function login() {
-    let userName = document.getElementById("userNameInput").value;
+function login(blogUserName) {
+    let userName;
+    if (!blogUserName) {
+        userName = document.getElementById("userNameInput").value;
+    } else
+    userName = blogUserName
     myName = userName;
     document.getElementById("userName").style.display = "none";
     document.getElementById("call").style.display = "block";

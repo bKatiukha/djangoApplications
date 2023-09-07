@@ -107,16 +107,17 @@ input {
     margin-bottom: 4px;
   }
 
-  input[type='text'], select, input[type='password'] {
+  input[type='text'], input[type='email'], input[type='password'], select {
     height: 42px;
     font-size: 18px;
   }
 
-  input[type='text'], input[type='password'], textarea, select {
+  input[type='text'], input[type='email'], input[type='password'], textarea, select {
     background-color: #f8f8f873;
     border: 2px solid #7845ac;
     border-radius: 10px;
     min-width: 280px;
+    width: 100%;
     padding: 0 20px;
     &:focus, &:active, &:hover {
       border-color: #4d1a7c;

@@ -1,6 +1,6 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
@@ -20,6 +20,7 @@ class RegisterUserPage(DataMixin, CreateView):
 
     def form_valid(self, form):
         user = form.save()
+        # UserProfile.objects.create(user=user)
         login(self.request, user)
         return redirect('blog')
 
@@ -42,16 +43,39 @@ def logout_user(request):
     return redirect('login')
 
 
-# def register_page(request):  # HttpRequest
-#     context = {
-#         'title': 'registration'
-#     }
-#     return render(request, 'shared/login.html', context=context)
+def edit_profile(request):
+    user = request.user
+    try:
+        profile = user.userprofile
+    except UserProfile.DoesNotExist:
+        profile = None
 
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST, instance=request.user)
+        profile_form = UserProfileEditForm(request.POST, request.FILES, instance=profile)
 
-# def login_page(request):  # HttpRequest
-#     # post = get_object_or_404(Post, slug=post_slug)
-#     context = {
-#         'title': 'login'
-#     }
-#     return render(request, 'shared/login.html', context=context)
+        # UserProfile.objects.create(user=user)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            if not profile:
+                profile = profile_form.save(commit=False)
+                profile.user = user
+                profile.save()
+            else:
+                profile_form.save()
+
+            return redirect('blog')
+    else:
+        user_form = UserEditForm(instance=request.user)
+        if profile:
+            profile_form = UserProfileEditForm(instance=profile)
+        else:
+            profile_form = UserProfileEditForm()
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'title': 'Edit profile'
+    }
+    return render(request, 'shared/edit_user.html', context)

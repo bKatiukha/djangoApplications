@@ -29,11 +29,16 @@ urlpatterns = [
     path('login/', LoginUserPage.as_view(), name='login'),
     path('register/', RegisterUserPage.as_view(), name='register'),
     path('logout/', logout_user, name='logout'),
+    path('profile/', include('src.shared_auth.urls')),
     path('blog/', include('src.blog.urls'), name='blog'),
     path('web_rtc/', include('src.web_rtc.urls'), name='web_rtc'),
 ]
 
 if settings.DEBUG:
+    urlpatterns += [
+        path("__debug__/", include("debug_toolbar.urls"))
+    ]
+
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
                    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

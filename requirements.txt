@@ -1,5 +1,6 @@
 Django
 django-sass-processor
 Pillow
-channels==3.0.4
+channels
 daphne
+django-debug-toolbar

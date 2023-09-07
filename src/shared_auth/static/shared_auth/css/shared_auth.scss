@@ -1,0 +1,44 @@
+.edit-user-avatar-form{
+  .image-preview {
+    img {
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      border: 3px solid #7845ac;
+    }
+  }
+  .avatar-label {
+    display: flex;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 0 auto;
+    position: relative;
+    &:before {
+      background-color: rgba(197, 225, 248, 0.34);
+      top: 0;
+      left: 0;
+      content: '';
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      z-index: 2;
+    }
+    &:after {
+      content: '+';
+      font-size: 80px;
+      line-height: 0;
+      position: absolute;
+      top: 50%;
+      left: calc(50% - 20px);
+      z-index: 3;
+      color: #7845ac;
+    }
+    input {
+      display: none;
+    }
+  }
+
+}

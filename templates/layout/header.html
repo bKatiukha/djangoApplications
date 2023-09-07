@@ -10,14 +10,33 @@
         <div class="navigation">
             {% main_navigation %}
         </div>
-        <div class="auth-header-info">
-            {% if request.user.is_authenticated %}
-                {{ user.username }} |
-                <a href="{% url 'logout' %}">LogOut</a>
-            {% else %}
+
+        {% if request.user.is_authenticated %}
+            <div class="auth-header-login-info">
+                <label for="header-user-menu">
+                    <div class="header-user-info">
+                        <div class="header-avatar">
+                            {% if user.userprofile.avatar %}
+                                <img src="{{ user.userprofile.avatar.url }}" alt="avatar">
+                            {% else %}
+                                <img src="{% static 'shared/images/default-avatar.png' %}" alt="avatar">
+                            {% endif %}
+                        </div>
+                        {{ user.username }}
+                    </div>
+                </label>
+                <input type="checkbox" id="header-user-menu">
+                <ul class="header-user-menu-drop-down">
+                    <li><a href=" {% url 'edit_profile' %}">Edit profile</a></li>
+                    <li><a href="{% url 'logout' %}">LogOut</a></li>
+                </ul>
+            </div>
+        {% else %}
+            <div class="auth-header-info">
                 <a href="{% url 'register' %}">registration</a> |
                 <a href="{% url 'login' %}">login</a>
-            {% endif %}
+            </div>
+        {% endif %}
         </div>
     </div>
 </header>
