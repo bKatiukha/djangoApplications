@@ -34,14 +34,26 @@
   border-radius: 50%;
   width: 400px;
   height: 400px;
-  padding: 30px;
+  margin: 30px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
 
+
   animation: play 2s ease infinite;
 
+  .caller-name-avatar {
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: -1;
+    opacity: 0.2;
+    width: 390px;
+    height: 390px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
   .buttons {
     margin-top: 80px;
     img {

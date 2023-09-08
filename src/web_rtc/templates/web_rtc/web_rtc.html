@@ -6,13 +6,16 @@
 {% block headTags %}
     <link href="{% sass_src 'web_rtc/css/web_rtc.scss' %}" rel="stylesheet" type="text/css"/>
     <script>
-        let myName;
+        let myName = '{{ user.username }}';
+        let user = {
+            name: '{{ user.username }}',
+            avatar: {% if user.userprofile.avatar %} '{{ user.userprofile.avatar.url }}' {% else %} '' {% endif %}
+        }
     </script>
 {% endblock headTags %}
 
 {% block content %}
     <div class="web_rtc-content">
-
 
         <!-- to input username and login -->
         <div class="user-name-block" id="userName">
@@ -44,6 +47,7 @@
         <!-- to show incoming call and accept -->
         <div id="answer">
             <div class="calling-block">
+                <img id="callerNameAvatar" class="caller-name-avatar" alt="avatar" src="{% static 'shared/images/default-avatar.png' %}">
                 <div class="">
                     <h2>Incoming Call</h2>
                 </div>
@@ -95,7 +99,7 @@
     <script src="{% static 'web_rtc/js/web_rtc.js' %}"></script>
     <script>
         {% if user.username %}
-            login('{{ user.username }}')
+            login('{{ user.username }}', {{ user.pk }})
         {% endif %}
     </script>
 {% endblock scripts %}

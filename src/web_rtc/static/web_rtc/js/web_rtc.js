@@ -5,19 +5,22 @@ let remoteRTCMessage;
 let peerConnection;
 let dataChannel;
 
-const constraints = {
-    video: true,
-    audio: false
-};
-
 let remoteStream;
 let localStream = new MediaStream();
 let localVideo = document.querySelector('#localVideo');
 let remoteVideo = document.querySelector('#remoteVideo');
+
 let callInProgress = false;
-let otherUser;
 
+let otherUser = {
+    name: '',
+    avatar: ''
+};
 
+const constraints = {
+    video: true,
+    audio: false
+};
 
 let pcConfig = {
     iceServers: [
@@ -31,13 +34,14 @@ let pcConfig = {
 };
 
 
-function login(blogUserName) {
+function login(blogUserName, blogUserId) {
+    console.log(blogUserId);
     let userName;
     if (!blogUserName) {
         userName = document.getElementById("userNameInput").value;
     } else
     userName = blogUserName
-    myName = userName;
+    user.name = userName;
     document.getElementById("userName").style.display = "none";
     document.getElementById("call").style.display = "block";
     document.getElementById("userNameText").innerHTML = userName;
@@ -47,12 +51,11 @@ function login(blogUserName) {
 
 //user html events
 function call() {
-    let userToCall = document.getElementById("calleeName").value;
-    otherUser = userToCall;
+    otherUser.name = document.getElementById("calleeName").value;;
 
     beReady()
         .then(bool => {
-            processCall(userToCall)
+            processCall(otherUser.name)
         })
 }
 
@@ -60,7 +63,7 @@ function declineCall() {
     callSocket.send(JSON.stringify({
         type: 'declineCall',
         data: {
-            user: otherUser
+            user: otherUser.name
         }
     }));
     stop();
@@ -106,7 +109,7 @@ function connectSocket() {
         callSocket.send(JSON.stringify({
             type: 'login',
             data: {
-                name: myName
+                name: user.name
             }
         }));
     }
@@ -145,12 +148,17 @@ function connectSocket() {
     const onOfferCall = (data) =>{
         //when other called you
         //show answer button
+        callInProgress = true;
+        otherUser.name = data.caller;
 
-        otherUser = data.caller;
         console.log('offer setRemoteRTCMessage rtc message', data.rtcMessage)
         remoteRTCMessage = data.rtcMessage
 
-        document.getElementById("callerNameText").innerHTML = otherUser;
+        if (data.avatar) {
+            otherUser.avatar = data.avatar;
+            document.getElementById("callerNameAvatar").src = data.avatar;
+        }
+        document.getElementById("callerNameText").innerHTML = otherUser.name;
         document.getElementById("call").style.display = "none";
         document.getElementById("answer").style.display = "block";
     }
@@ -189,7 +197,7 @@ function sendCall(data) {
     }));
 
     document.getElementById("call").style.display = "none";
-    document.getElementById("calleeNameText").innerHTML = otherUser;
+    document.getElementById("calleeNameText").innerHTML = otherUser.name;
     document.getElementById("calling").style.display = "block";
 }
 
@@ -219,11 +227,13 @@ function createConnectionAndAddStream() {
     return true;
 }
 
-function processCall(userName) {
+function processCall(otherUserName) {
+    callInProgress = true;
     peerConnection.createOffer((sessionDescription) => {
         peerConnection.setLocalDescription(sessionDescription);
         sendCall({
-            name: userName,
+            name: otherUserName,
+            avatar: user.avatar,
             rtcMessage: sessionDescription
         })
     }, (error) => {
@@ -241,7 +251,7 @@ function processAccept() {
         peerConnection.setLocalDescription(answer)
 
         answerCall({
-            caller: otherUser,
+            caller: otherUser.name,
             rtcMessage: answer
         })
     });
@@ -284,7 +294,7 @@ function handleIceCandidate(event) {
     //send only if we have caller, else no need to
     if (event.candidate) {
         sendICEcandidate({
-            user: otherUser,
+            user: otherUser.name,
             rtcMessage: {
                 label: event.candidate.sdpMLineIndex,
                 id: event.candidate.sdpMid,
@@ -309,7 +319,7 @@ function handleRemoteStreamRemoved(event) {
 
 window.onbeforeunload = function () {
     if (callInProgress) {
-        stop();
+        declineCall();
     }
 };
 
@@ -327,13 +337,13 @@ function stop() {
     document.getElementById("inCall").style.display = "none";
     document.getElementById("calling").style.display = "none";
     document.getElementById("videos").style.display = "none";
-    otherUser = null;
+    otherUser = { name: '', avatar: '' }
 }
 
 // display call
 function callProgress() {
     document.getElementById("videos").style.display = "block";
-    document.getElementById("otherUserNameCall").innerHTML = otherUser;
+    document.getElementById("otherUserNameCall").innerHTML = otherUser.name;
     document.getElementById("inCall").style.display = "block";
 
     callInProgress = true;

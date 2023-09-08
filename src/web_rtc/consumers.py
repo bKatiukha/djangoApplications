@@ -57,6 +57,7 @@ class CallConsumer(WebsocketConsumer):
                     'type': 'offer',
                     'data': {
                         'caller': self.my_name,
+                        'avatar': text_data_json['data']['avatar'],
                         'rtcMessage': text_data_json['data']['rtcMessage']
                     }
                 }
