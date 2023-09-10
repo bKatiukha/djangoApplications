@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'src.blog',
     'src.web_rtc',
     'src.shared_auth',
+    'src.chat',
 
     'sass_processor',
     'channels',
@@ -69,6 +70,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'src/blog', 'templates'),
             os.path.join(BASE_DIR, 'src/shared_auth', 'templates'),
             os.path.join(BASE_DIR, 'src/web_rtc', 'templates'),
+            os.path.join(BASE_DIR, 'src/chat', 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -141,6 +143,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     BASE_DIR / 'src/blog/static',
     BASE_DIR / 'src/web_rtc/static',
+    BASE_DIR / 'src/chat/static',
 ]
 
 SASS_PROCESSOR_ROOT = STATIC_ROOT

@@ -32,6 +32,7 @@ urlpatterns = [
     path('profile/', include('src.shared_auth.urls')),
     path('blog/', include('src.blog.urls'), name='blog'),
     path('web_rtc/', include('src.web_rtc.urls'), name='web_rtc'),
+    path('chat/', include('src.chat.urls'), name='chat'),
 ]
 
 if settings.DEBUG:

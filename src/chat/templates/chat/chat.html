@@ -1,0 +1,46 @@
+{% extends 'layout/main.html' %}
+{% load sass_tags static %}
+
+{% block pageTitle %} {{ title }} {% endblock pageTitle %}
+
+{% block headTags %}
+    <link href="{% sass_src 'chat/css/chat.scss' %}" rel="stylesheet" type="text/css"/>
+    <script>
+        let myName = '{{ user.username }}';
+        let user = {
+            name: '{{ user.username }}',
+            avatar: {% if user.userprofile.avatar %} '{{ user.userprofile.avatar.url }}' {% else %} '' {% endif %}
+        }
+    </script>
+    <script>
+        function guid() {
+          function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+              .toString(16)
+              .substring(1);
+          }
+          return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+        }
+    </script>
+{% endblock headTags %}
+
+{% block content %}
+    <div class="chat-content">
+        {% if all_chats %}
+            {% for chat in all_chats %}
+                <div>
+                    {{ chat.name }}
+                    <a href="{{ chat.get_absolute_url }}">{{ chat.uuid }}</a>
+                    {{ chat.created_at }}
+                    {{ chat.created_by }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock content %}
+
+
+{% block scripts %}
+    <script src="{% static 'chat/js/chat.js' %}"></script>
+{% endblock scripts %}

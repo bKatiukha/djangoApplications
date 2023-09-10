@@ -1,0 +1,80 @@
+{% extends 'layout/main.html' %}
+{% load sass_tags static %}
+
+{% block pageTitle %} {{ title }} {% endblock pageTitle %}
+
+{% block headTags %}
+    <link href="{% sass_src 'chat/css/chat.scss' %}" rel="stylesheet" type="text/css"/>
+    <script>
+        let user = {
+            name: '{{ user.username }}',
+            avatar: {% if user.userprofile.avatar %} '{{ user.userprofile.avatar.url }}' {% else %} '' {% endif %}
+        }
+    </script>
+{#    <script>#}
+{#        function guid() {#}
+{#          function s4() {#}
+{#            return Math.floor((1 + Math.random()) * 0x10000)#}
+{#              .toString(16)#}
+{#              .substring(1);#}
+{#          }#}
+{#          return s4() + s4() + '-' + s4() + '-' + s4() + '-' +#}
+{#            s4() + '-' + s4() + s4() + s4();#}
+{#        }#}
+{#    </script>#}
+{% endblock headTags %}
+
+{% block content %}
+    <div class="chat-content">
+        <div class="chat-block">
+            <div class="room-info">
+                <div class="room-info-row">
+                    <div>Chat name</div>
+                    <div>{{ room.name }}</div>
+                </div>
+                <div class="room-info-row">
+                    <div>Chat ID for invite</div>
+                    <div>{{ room.uuid }}</div>
+                </div>
+                <div class="room-info-row">
+                    <div>Created by</div>
+                    <div>{{ room.created_by }}</div>
+                </div>
+                <div class="room-info-row">
+                    <div>Created at</div>
+                    <div>{{ room.created_at|date:"Y-m-d" }}</div>
+                </div>
+            </div>
+            <div class="chat">
+                <div class="messages" id="messages">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="message-row">
+                                <div>
+                                    {{ message.created_by }}:
+                                    {{ message.message }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div>
+                    <div class="form-field">
+                        <input id="message-input" type="text" placeholder="Input your message" name="message">
+                    </div>
+                    <img onclick="send_message(user.name)" class="send-icon" src="{% static 'shared/images/send-icon.svg' %}">
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}
+
+
+{% block scripts %}
+    <script src="{% static 'chat/js/chat.js' %}"></script>
+    <script>
+        connectSocket('{{ room.uuid }}');
+    </script>
+{% endblock scripts %}

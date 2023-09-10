@@ -1,0 +1,66 @@
+.chat-content {
+  margin: 80px 0;
+}
+.chat-block {
+  display: flex;
+  align-items: self-start;
+}
+.room-info, .chat {
+  margin: 30px;
+  border-radius: 30px;
+  background-color: #f8f8f873;
+  font-family: 'Montserrat', sans-serif;
+  border: 4px solid rgba(120, 69, 172, 0.2);
+}
+
+.room-info .room-info-row {
+  margin: 20px;
+  div:last-of-type {
+    font-weight: 800;
+  }
+}
+
+.chat {
+  min-width: 500px;
+  //height: 450px;
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  .form-field input {
+    height: 50px;
+    line-height: 50px;
+    border: 4px solid rgba(120, 69, 172, 0.2);
+    border-radius: 30px;
+    position: relative;
+    bottom: -4px;
+    &:active, &:focus, &:hover {
+      outline: none;
+      border: 4px solid rgba(120, 69, 172, 0.2);
+    };
+
+  }
+}
+.messages {
+  max-height: 400px;
+  overflow-x: auto;
+}
+.message-row {
+  margin: 20px 10px;
+  display: flex;
+  div {
+    padding: 8px;
+    border-radius: 10px 10px 10px 0;
+    background-color: rgba(120, 69, 172, 0.2);
+  }
+}
+
+.send-icon {
+  position: absolute;
+  height: 42px;
+  width: 42px;
+  right: 10px;
+  bottom: 0;
+  cursor: pointer;
+}

@@ -16,8 +16,8 @@ NAVIGATION_ITEMS = [
         'routerLink': 'web_rtc'
     },
     {
-        'title': 'WebRTC',
-        'routerLink': 'web_rtc'
+        'title': 'Chat',
+        'routerLink': 'chat'
     }
 ]
 
