@@ -34,7 +34,7 @@ def chat(request):
     else:
         form = ChatNameForm()
 
-    all_chats = Room.objects.all()
+    all_chats = Room.objects.select_related('created_by').all()
     my_chats = all_chats.filter(created_by=request.user.pk)
 
     context = {
@@ -49,8 +49,8 @@ def chat(request):
 @login_required
 def chat_uuid(request, uuid):
     try:
-        room = Room.objects.get(uuid=uuid)
-        messages = Message.objects.filter(room=room)
+        room = Room.objects.select_related('created_by').get(uuid=uuid)
+        messages = Message.objects.select_related('created_by').filter(room=room)
         context = {
             'title': 'chat uuid',
             'room': room,

@@ -11,17 +11,6 @@
             avatar: {% if user.userprofile.avatar %} '{{ user.userprofile.avatar.url }}' {% else %} '' {% endif %}
         }
     </script>
-{#    <script>#}
-{#        function guid() {#}
-{#          function s4() {#}
-{#            return Math.floor((1 + Math.random()) * 0x10000)#}
-{#              .toString(16)#}
-{#              .substring(1);#}
-{#          }#}
-{#          return s4() + s4() + '-' + s4() + '-' + s4() + '-' +#}
-{#            s4() + '-' + s4() + s4() + s4();#}
-{#        }#}
-{#    </script>#}
 {% endblock headTags %}
 
 {% block content %}
@@ -37,7 +26,7 @@
                         <div>Chat ID for invite</div>
                         <div class="room-invite">
                             Copy invite url
-                            <img onclick="copyToClipboard('{{ chat.uuid }}')" class="m-l-5" src="{% static 'shared/images/copy-icon.png' %}">
+                            <img onclick="copyToClipboard('{{ chat.uuid }}')" class="m-l-5" src="{% static 'chat/images/copy-icon.png' %}">
                         </div>
 
                     </div>
@@ -65,12 +54,11 @@
                         {% endfor %}
                     {% endif %}
                 </div>
-
                 <div>
                     <div class="form-field">
                         <input id="message-input" type="text" placeholder="Input your message" name="message">
                     </div>
-                    <img onclick="send_message(user.name)" class="send-icon" src="{% static 'shared/images/send-icon.svg' %}">
+                    <img onclick="send_message(user.name)" class="send-icon" src="{% static 'chat/images/send-icon.svg' %}">
                 </div>
             </div>
         </div>

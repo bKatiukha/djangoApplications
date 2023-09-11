@@ -1,0 +1,25 @@
+{% load static %}
+
+{% if chats %}
+    {% for chat in chats %}
+        <div class="chat-info">
+            <div class="chat-info-row">
+                <div>Go to chat <span onclick="goToChat('{{ chat.uuid }}')" class="bold m-l-5 pointer">{{ chat.name }}</span></div>
+                <div>
+                    <div>Copy invite url </div>
+                    <img onclick="copyToClipboard('{{ chat.uuid }}')" class="m-l-5" src="{% static 'chat/images/copy-icon.png' %}">
+                </div>
+            </div>
+            <div class="chat-info-row">
+                <div>
+                    Created by:
+                    <span class="bold m-l-5"> {{ chat.created_by }} </span>
+                </div>
+                <div>
+                    Created at:
+                    <span class="bold m-l-5"> {{ chat.created_at|date:"Y-m-d" }} </span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}

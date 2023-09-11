@@ -55,8 +55,8 @@
                     <h2><span id="callerNameText"></span></h2>
                 </div>
                 <div class="buttons">
-                    <img onclick="declineCall()" alt="decline" src="{% static 'shared/images/decline.png' %}"/>
-                    <img onclick="answer()" alt="answer" src="{% static 'shared/images/answer.png' %}"/>
+                    <img onclick="declineCall()" alt="decline" src="{% static 'web_rtc/images/decline.png' %}"/>
+                    <img onclick="answer()" alt="answer" src="{% static 'web_rtc/images/answer.png' %}"/>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
                     <h3><span id="calleeNameText"></span></h3>
                 </div>
                 <div class="buttons">
-                    <img onclick="declineCall()" alt="decline" src="{% static 'shared/images/decline.png' %}"/>
+                    <img onclick="declineCall()" alt="decline" src="{% static 'web_rtc/images/decline.png' %}"/>
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@
         <div id="videos" class="video-block">
             <video class="local-video" width="100px" id="localVideo" autoplay playsinline></video>
             <video class="remote-video" id="remoteVideo" autoplay playsinline></video>
-            <img onclick="stop()" alt="decline" src="{% static 'shared/images/decline.png' %}"/>
+            <img onclick="stop()" alt="decline" src="{% static 'web_rtc/images/decline.png' %}"/>
         </div>
     </div>
 {% endblock content %}
