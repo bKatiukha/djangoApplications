@@ -55,3 +55,13 @@ function send_message(userName) {
         messageInput.value = '';
     }
 }
+
+
+function copyToClipboard(uuid) {
+    window.location.href.toString()
+    navigator.clipboard.writeText(window.location.href.toString()+ uuid);
+}
+
+function goToChat(uuid) {
+    window.location.href = window.location.href.toString() + uuid;
+}

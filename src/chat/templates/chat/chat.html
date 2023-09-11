@@ -12,31 +12,81 @@
             avatar: {% if user.userprofile.avatar %} '{{ user.userprofile.avatar.url }}' {% else %} '' {% endif %}
         }
     </script>
-    <script>
-        function guid() {
-          function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-              .toString(16)
-              .substring(1);
-          }
-          return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + s4() + s4();
-        }
-    </script>
 {% endblock headTags %}
 
 {% block content %}
     <div class="chat-content">
-        {% if all_chats %}
-            {% for chat in all_chats %}
-                <div>
-                    {{ chat.name }}
-                    <a href="{{ chat.get_absolute_url }}">{{ chat.uuid }}</a>
-                    {{ chat.created_at }}
-                    {{ chat.created_by }}
-                </div>
-            {% endfor %}
-        {% endif %}
+        <div>
+            <h2 class="text-center">Create new chat</h2>
+            <form class="custom-form" method="post">
+                {% csrf_token %}
+                <div class="form-error non-field-errors">{{ create_chat_form.non_field_errors }}</div>
+                {% for f in create_chat_form %}
+                    <div class="form-field">
+                        <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
+                        {{ f }}
+                        <div class="form-error">{{ f.errors }}</div>
+                    </div>
+                {% endfor %}
+                <button class="custom-button" type="submit"> Create </button>
+            </form>
+        </div>
+        <div class="chats">
+            <div>
+                <h3 class="text-center">My chats</h3>
+                {% if my_chats %}
+                    {% for chat in my_chats %}
+                        <div class="chat-info">
+                            <div class="chat-info-row">
+                                <div>Go to chat <span onclick="goToChat('{{ chat.uuid }}')" class="bold m-l-5 pointer">{{ chat.name }}</span></div>
+                                <div>
+                                    <div>Copy invite url </div>
+                                    <img onclick="copyToClipboard('{{ chat.uuid }}')" class="m-l-5" src="{% static 'shared/images/copy-icon.png' %}">
+                                </div>
+                            </div>
+                            <div class="chat-info-row">
+                                <div>
+                                    Created by:
+                                    <span class="bold m-l-5"> {{ chat.created_by }} </span>
+                                </div>
+                                <div>
+                                    Created at:
+                                    <span class="bold m-l-5"> {{ chat.created_at|date:"Y-m-d" }} </span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div>
+                <h3 class="text-center">All chats</h3>
+                {% if all_chats %}
+                    {% for chat in all_chats %}
+                        <div class="chat-info">
+                            <div class="chat-info-row">
+                                <div>Go to chat <span onclick="goToChat('{{ chat.uuid }}')" class="bold m-l-5 pointer">{{ chat.name }}</span></div>
+                                <div>
+                                    <div>Copy invite url </div>
+                                    <img onclick="copyToClipboard('{{ chat.uuid }}')" class="m-l-5" src="{% static 'shared/images/copy-icon.png' %}">
+                                </div>
+                            </div>
+                            <div class="chat-info-row">
+                                <div>
+                                    Created by:
+                                    <span class="bold m-l-5"> {{ chat.created_by }} </span>
+                                </div>
+                                <div>
+                                    Created at:
+                                    <span class="bold m-l-5"> {{ chat.created_at|date:"Y-m-d" }} </span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+        </div>
+
     </div>
 {% endblock content %}
 

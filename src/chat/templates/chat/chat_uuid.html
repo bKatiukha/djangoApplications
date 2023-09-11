@@ -30,19 +30,26 @@
             <div class="room-info">
                 <div class="room-info-row">
                     <div>Chat name</div>
-                    <div>{{ room.name }}</div>
+                    <div class="bold">{{ room.name }}</div>
                 </div>
                 <div class="room-info-row">
-                    <div>Chat ID for invite</div>
-                    <div>{{ room.uuid }}</div>
+                    <div class="room-uuid-block">
+                        <div>Chat ID for invite</div>
+                        <div class="room-invite">
+                            Copy invite url
+                            <img onclick="copyToClipboard('{{ chat.uuid }}')" class="m-l-5" src="{% static 'shared/images/copy-icon.png' %}">
+                        </div>
+
+                    </div>
+                    <div class="bold">{{ room.uuid }}</div>
                 </div>
                 <div class="room-info-row">
                     <div>Created by</div>
-                    <div>{{ room.created_by }}</div>
+                    <div class="bold">{{ room.created_by }}</div>
                 </div>
                 <div class="room-info-row">
                     <div>Created at</div>
-                    <div>{{ room.created_at|date:"Y-m-d" }}</div>
+                    <div class="bold">{{ room.created_at|date:"Y-m-d" }}</div>
                 </div>
             </div>
             <div class="chat">
