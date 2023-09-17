@@ -317,6 +317,7 @@ function handleRemoteStreamRemoved(event) {
     localVideo.srcObject = null;
 }
 
+// on reload or close page decline call
 window.onbeforeunload = function () {
     if (callInProgress) {
         declineCall();

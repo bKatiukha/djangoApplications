@@ -33,6 +33,7 @@ urlpatterns = [
     path('blog/', include('src.blog.urls'), name='blog'),
     path('web_rtc/', include('src.web_rtc.urls'), name='web_rtc'),
     path('chat/', include('src.chat.urls'), name='chat'),
+    path('oryx_equipment_losses/', include('src.oryx_equipment_losses.urls'), name='oryx_equipment_losses'),
 ]
 
 if settings.DEBUG:

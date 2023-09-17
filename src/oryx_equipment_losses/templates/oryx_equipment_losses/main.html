@@ -1,0 +1,14 @@
+{% extends 'layout/main.html' %}
+{% load sass_tags %}
+
+{% block pageTitle %} {{ title }} {% endblock pageTitle %}
+
+{% block headTags %}
+    <link href="{% sass_src 'oryx_equipment_losses/css/main.scss' %}" rel="stylesheet" type="text/css"/>
+{% endblock headTags %}
+
+{% block content %}
+    {% block oryx_equipment_losses_content %}
+    {% endblock oryx_equipment_losses_content %}
+{% endblock content %}
+

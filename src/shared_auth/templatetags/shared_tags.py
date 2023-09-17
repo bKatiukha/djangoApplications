@@ -8,16 +8,16 @@ NAVIGATION_ITEMS = [
         'routerLink': 'blog'
     },
     {
-        'title': 'Blog',
-        'routerLink': 'blog'
-    },
-    {
         'title': 'WebRTC',
         'routerLink': 'web_rtc'
     },
     {
         'title': 'Chat',
         'routerLink': 'chat'
+    },
+    {
+        'title': 'Oryx parser',
+        'routerLink': 'oryx_equipment_losses'
     }
 ]
 

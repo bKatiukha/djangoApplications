@@ -1,5 +1,6 @@
 messagesBlock = document.getElementById("messages")
 messageInput = document.getElementById("message-input")
+
 messageInput.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
       send_message(user.name)
@@ -9,7 +10,7 @@ messageInput.addEventListener('keypress', function (e) {
 let chatSocket;
 function connectSocket(uuid) {
     messagesBlock.scrollTo(0, messagesBlock.scrollHeight);
-    let ws_scheme = "ws://";
+    const ws_scheme = "ws://";
     console.log(ws_scheme);
 
     chatSocket = new WebSocket(
@@ -36,7 +37,7 @@ function connectSocket(uuid) {
 }
 
 function displayChatMessage(data) {
-    newMessage = `<div class="message-row"><div>
+    const newMessage = `<div class="message-row"><div>
                         ${data.created_by}: ${data.message}
                     </div></div>`
     messagesBlock.innerHTML += newMessage

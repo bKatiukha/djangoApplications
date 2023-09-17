@@ -4,3 +4,5 @@ Pillow
 channels
 daphne
 django-debug-toolbar
+beautifulsoup4
+requests

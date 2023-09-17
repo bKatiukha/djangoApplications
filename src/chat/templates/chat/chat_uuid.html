@@ -1,19 +1,8 @@
-{% extends 'layout/main.html' %}
+{% extends 'chat/main.html' %}
 {% load sass_tags static %}
 
-{% block pageTitle %} {{ title }} {% endblock pageTitle %}
 
-{% block headTags %}
-    <link href="{% sass_src 'chat/css/chat.scss' %}" rel="stylesheet" type="text/css"/>
-    <script>
-        let user = {
-            name: '{{ user.username }}',
-            avatar: {% if user.userprofile.avatar %} '{{ user.userprofile.avatar.url }}' {% else %} '' {% endif %}
-        }
-    </script>
-{% endblock headTags %}
-
-{% block content %}
+{% block chat_content %}
     <div class="chat-content">
         <div class="chat-block">
             <div class="room-info">
@@ -64,12 +53,11 @@
         </div>
 
     </div>
-{% endblock content %}
+{% endblock chat_content %}
 
 
-{% block scripts %}
-    <script src="{% static 'chat/js/chat.js' %}"></script>
+{% block chat_footer_script %}
     <script>
         connectSocket('{{ room.uuid }}');
     </script>
-{% endblock scripts %}
+{% endblock chat_footer_script %}

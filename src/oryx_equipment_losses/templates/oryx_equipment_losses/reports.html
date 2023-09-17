@@ -1,0 +1,53 @@
+{% extends 'oryx_equipment_losses/main.html' %}
+{% load static %}
+
+{% block oryx_equipment_losses_content %}
+    <form class="custom-form" method="post">
+        {% csrf_token %}
+        <button class="custom-button" type="submit">Force update losses data</button>
+    </form>
+
+    <div>
+        <div class="reports-content">
+        {% for side, side_data in grouped_losses.items %}
+            <div class="reports-side-block">
+                <div class="side-title">
+                    Losses -
+                    {% if side == 'UA' %}
+                        Ukraine
+                    {% elif side == 'RU' %}
+                        russia
+                    {% else %}
+                        {{ side }}
+                    {% endif %}
+                </div>
+                <div class="accordion">
+                    {% for report_date, report_date_data in side_data.items %}
+                        <div class="accordion-item">
+                            <input class="accordion-checkbox" checked type="checkbox" id="{{report_date}}-{{side}}">
+                            <label class="accordion-item-label report-title" for="{{report_date}}-{{side}}">Report Date: {{ report_date }}</label>
+                            <div class="accordion-item-content">
+                                {% for category, category_data in report_date_data.items %}
+                                    <div class="category-name">{{ category.name }}</div>
+
+                                    {% for vehicle, vehicle_data in category_data.items %}
+                                        <div class="vehicle">
+                                            <img class="vehicle-country-icon" alt="" src="{{ vehicle.country_made_icon.image_href }}">
+                                            <span class="vehicle-name">
+                                                {{ vehicle.name }}
+                                            </span>
+                                            {% for loss in vehicle_data %}
+                                                <a class="vehicle-link" target="_blank" href="{{ loss.href }}">{{ loss.name }}</a>
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock oryx_equipment_losses_content %}

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'src.web_rtc',
     'src.shared_auth',
     'src.chat',
+    'src.oryx_equipment_losses',
 
     'sass_processor',
     'channels',
@@ -71,6 +72,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'src/shared_auth', 'templates'),
             os.path.join(BASE_DIR, 'src/web_rtc', 'templates'),
             os.path.join(BASE_DIR, 'src/chat', 'templates'),
+            os.path.join(BASE_DIR, 'src/oryx_equipment_losses', 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -128,7 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = True
 
@@ -144,6 +146,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'src/blog/static',
     BASE_DIR / 'src/web_rtc/static',
     BASE_DIR / 'src/chat/static',
+    BASE_DIR / 'src/oryx_equipment_losses/static',
 ]
 
 SASS_PROCESSOR_ROOT = STATIC_ROOT

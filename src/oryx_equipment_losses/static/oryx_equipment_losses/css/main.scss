@@ -1,0 +1,94 @@
+.reports-content {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  .reports-side-block {
+    width: 48%;
+  }
+  .side-title, .report-title, .category-name {
+    font-family: 'Montserrat', sans-serif;
+  }
+  .side-title {
+    font-size: 30px;
+    text-align: center;
+    font-weight: 800;
+    margin-bottom: 40px;
+  }
+  .category-name {
+    font-weight: 600;
+  }
+  .vehicle{
+    font-size: 13px;
+    line-height: 25px;
+    margin: 8px 0;
+    .vehicle-name {
+      font-weight: 600;
+    }
+    .vehicle-name, .vehicle-country-icon {
+      padding-right: 8px;
+    }
+    .vehicle-link {
+      color: rgb(133, 129, 129);
+      opacity: .8;
+      &:active, &:focus, &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+
+/* Accordion styles */
+.accordion {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 4px -2px rgba(0,0,0,0.5);
+}
+.accordion-item {
+  width: 100%;
+  overflow: hidden;
+  &-label {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    background: #7845ac;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    /* Icon */
+    &:hover {
+      background: darken(#7845ac, 10%);
+    }
+    &::after {
+      content: "\276F";
+      width: 1em;
+      height: 1em;
+      text-align: center;
+      transition: all .35s;
+    }
+  }
+  &-content {
+    max-height: 0;
+    padding: 0 1em;
+    background: white;
+    transition: all .35s;
+  }
+}
+
+.accordion-checkbox {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+// :checked
+.accordion-checkbox:checked {
+  + .accordion-item-label {
+    &::after {
+      transform: rotate(90deg);
+    }
+  }
+  ~ .accordion-item-content {
+    max-height: unset;
+    padding: 1em;
+  }
+}
