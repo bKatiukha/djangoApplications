@@ -1,7 +1,5 @@
-from collections import defaultdict
-
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils import timezone
 
 from src.oryx_equipment_losses.models import VehicleCategory, Vehicle, CountryMadeIcon, Loss, Report, SIDES
@@ -76,10 +74,11 @@ def create_loss_if_not_exist(
     name = loss_item.get("name")
     href = loss_item.get("href")
     side = loss_item.get("side")
+    loss_vehicle_name = loss_item.get("vehicle_name")
 
     # Check if the name exists in the existing_losses
     for loss in existing_losses:
-        if loss.href == href:
+        if loss.href == href and loss.name == name and loss.vehicle.name == loss_vehicle_name:
             return existing_losses
 
     # If it doesn't exist, create a new Loss object
@@ -115,7 +114,7 @@ def create_report_if_not_exist():
     return report
 
 
-def save_parsed_data_to_bd(parsed_data, existed_report=None):
+def save_parsed_data_to_bd(parsed_data):
     # Retrieve all existing categories from the database
     existing_categories = set(VehicleCategory.objects.all())
     # Retrieve all existing country_made_icons from the database
@@ -123,9 +122,9 @@ def save_parsed_data_to_bd(parsed_data, existed_report=None):
     # Retrieve all existing vehicles from the database
     existing_vehicles = set(Vehicle.objects.all())
     # Retrieve all existing losses from the database
-    existing_losses = set(Loss.objects.all())
+    existing_losses = set(Loss.objects.prefetch_related('vehicle').all())
     # get current date report
-    report = existed_report if existed_report else create_report_if_not_exist()
+    report = create_report_if_not_exist()
 
     for loss_item in parsed_data:
         create_loss_if_not_exist(
@@ -140,52 +139,36 @@ def save_parsed_data_to_bd(parsed_data, existed_report=None):
 
 @login_required
 def oryx_equipment_losses(request):
-    if request.method == 'POST':
-        save_parsed_data_to_bd(
-            parse_remote_oryx_page('UA') + parse_remote_oryx_page('RU'),
-        )
-
-    current_date = (timezone.now() + timezone.timedelta(hours=3)).date()
-    current_date_report = Report.objects.filter(report_date=current_date)
-
-    print('current_date_report', current_date, not current_date_report)
-    if not current_date_report:
-        print('not current_date_report', not current_date_report)
-        save_parsed_data_to_bd(
-            parse_remote_oryx_page('UA') + parse_remote_oryx_page('RU'),
-            current_date_report
-        )
-
     reports = Report.objects.prefetch_related(
         'report_losses',
         'report_losses__vehicle__vehicle_category',
         'report_losses__vehicle__country_made_icon'
     ).all()
 
+    current_date = (timezone.now() + timezone.timedelta(hours=3)).date()
+    current_date_report = [report for report in reports if report.report_date == current_date]
+    if not current_date_report:
+        save_parsed_data_to_bd(
+            parse_remote_oryx_page('UA') + parse_remote_oryx_page('RU'),
+        )
+
     # Create a dictionary to store losses grouped by report date, side, category, and vehicle
     grouped_losses = {}
 
     for report in reports:
-        report_date = report.report_date
-
-        # loop for add empty reports in report_date for all sides
-        for side, _ in SIDES:
-            if side not in grouped_losses:
-                grouped_losses[side] = {}
-            if report_date not in grouped_losses[side]:
-                grouped_losses[side][report_date] = {}
-
         for loss in report.report_losses.all():
+            report_date = report.report_date
             side = loss.side
             category = loss.vehicle.vehicle_category
             vehicle = loss.vehicle
 
-            if category not in grouped_losses[side][report_date]:
-                grouped_losses[side][report_date][category] = {}
+            grouped_losses\
+                .setdefault(side, {})\
+                .setdefault(report_date, {})\
+                .setdefault(category, {})\
+                .setdefault(vehicle, [])
 
-            if vehicle not in grouped_losses[side][report_date][category]:
-                grouped_losses[side][report_date][category][vehicle] = []
-
+            # Append the loss to the list
             grouped_losses[side][report_date][category][vehicle].append(loss)
 
     context = {
@@ -194,3 +177,13 @@ def oryx_equipment_losses(request):
         'grouped_losses': grouped_losses
     }
     return render(request, 'oryx_equipment_losses/reports.html', context=context)
+
+
+@login_required
+def force_update_oryx_losses(request):
+    if request.method == 'POST':
+        save_parsed_data_to_bd(
+            parse_remote_oryx_page('UA') + parse_remote_oryx_page('RU'),
+        )
+
+    return redirect('oryx_equipment_losses')

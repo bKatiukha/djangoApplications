@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block oryx_equipment_losses_content %}
-    <form class="custom-form" method="post">
+    <form class="custom-form" method="post" action="{% url 'force_update_oryx_losses' %}">
         {% csrf_token %}
         <button class="custom-button" type="submit">Force update losses data</button>
     </form>

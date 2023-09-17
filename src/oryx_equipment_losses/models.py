@@ -38,10 +38,11 @@ class Report(models.Model):
 
 class Loss(models.Model):
     name = models.CharField(max_length=255)
-    href = models.CharField(max_length=255, unique=True)
+    href = models.CharField(max_length=255)
     side = models.CharField(max_length=2, choices=SIDES)
     vehicle = models.ForeignKey(Vehicle, blank=True, default=None, on_delete=models.DO_NOTHING)
     report = models.ForeignKey(Report, blank=True, default=None,
                                related_name='report_losses', on_delete=models.DO_NOTHING)
 
-
+    class Meta:
+        unique_together = ('name', 'href', 'vehicle')

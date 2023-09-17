@@ -6,6 +6,7 @@ from .views import *
 
 urlpatterns = [
     path('', oryx_equipment_losses, name='oryx_equipment_losses'),
+    path('force_update_oryx_losses', force_update_oryx_losses, name='force_update_oryx_losses'),
 ]
 
 if settings.DEBUG:
