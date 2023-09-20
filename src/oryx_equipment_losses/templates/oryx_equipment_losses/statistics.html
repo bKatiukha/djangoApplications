@@ -1,0 +1,30 @@
+{% extends 'oryx_equipment_losses/main.html' %}
+{% load sass_tags static oryx_filters %}
+
+{% block oryx_head_tags %}
+    <link href="{% sass_src 'oryx_equipment_losses/css/statistics.scss' %}" rel="stylesheet" type="text/css"/>
+    <!--Chart js-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+{% endblock oryx_head_tags %}
+
+{% block oryx_equipment_losses_content %}
+    <div class="statistics-container">
+        <div class="base-statistics">
+            <div class="pie-chart">
+                <canvas id="pieChart"></canvas>
+            </div>
+            <div class="line-chart">
+                <canvas id="lineChart"></canvas>
+            </div>
+        </div>
+    </div>
+{% endblock oryx_equipment_losses_content %}
+
+{% block oryx_scripts %}
+    <script>
+        const losses={{ formatted_losses|safe}}
+    </script>
+    <script src="{% static 'oryx_equipment_losses/js/statistics_charts.js' %}"></script>
+{% endblock oryx_scripts %}

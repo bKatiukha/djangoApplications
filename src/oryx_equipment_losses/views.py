@@ -1,4 +1,7 @@
+import re
+
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
@@ -39,9 +42,10 @@ def create_vehicle_if_not_exist(
         existing_categories
 ):
     vehicle_name = loss_item.get("vehicle_name")
+    vehicle_country_made_icon = loss_item.get("vehicle_country_made_icon")
     # Check if the vehicle_name exists in the existing_vehicles
     for vehicle in existing_vehicles:
-        if vehicle.name == vehicle_name:
+        if vehicle.name == vehicle_name and vehicle_country_made_icon == vehicle.country_made_icon.image_href:
             return vehicle
 
     # If it doesn't exist, create a new Vehicle object
@@ -78,7 +82,16 @@ def create_loss_if_not_exist(
 
     # Check if the name exists in the existing_losses
     for loss in existing_losses:
-        if loss.href == href and loss.name == name and loss.vehicle.name == loss_vehicle_name:
+        if loss.name == name and loss.vehicle.name == loss_vehicle_name and loss.side == side:
+            if loss.href != href:
+                try:
+                    # if resource href change then update it
+                    loss.href = href
+                    loss.report = loss.report
+                    loss.save()
+                except IntegrityError:
+                    print("Error: can't update Loss because of it will be duplication")
+                    print("Error for:", loss.vehicle.name, loss.href, loss.name)
             return existing_losses
 
     # If it doesn't exist, create a new Loss object
@@ -101,7 +114,7 @@ def create_loss_if_not_exist(
 
 
 def create_report_if_not_exist():
-    current_date = (timezone.now() + timezone.timedelta(hours=3)).date()
+    current_date = timezone.now().date()
 
     try:
         # Try to retrieve a report with the current date
@@ -145,7 +158,7 @@ def oryx_equipment_losses(request):
         'report_losses__vehicle__country_made_icon'
     ).all()
 
-    current_date = (timezone.now() + timezone.timedelta(hours=3)).date()
+    current_date = timezone.now().date()
     current_date_report = [report for report in reports if report.report_date == current_date]
     if not current_date_report:
         save_parsed_data_to_bd(
@@ -156,8 +169,8 @@ def oryx_equipment_losses(request):
     grouped_losses = {}
 
     for report in reports:
+        report_date = report.report_date
         for loss in report.report_losses.all():
-            report_date = report.report_date
             side = loss.side
             category = loss.vehicle.vehicle_category
             vehicle = loss.vehicle
@@ -167,16 +180,43 @@ def oryx_equipment_losses(request):
                 .setdefault(report_date, {})\
                 .setdefault(category, {})\
                 .setdefault(vehicle, [])
-
             # Append the loss to the list
             grouped_losses[side][report_date][category][vehicle].append(loss)
 
+    # sort grouped_losses by key (always display sides in same order)
+    grouped_losses = {key: grouped_losses[key] for key in sorted(grouped_losses.keys(), reverse=True)}
     context = {
         'title': 'oryx_equipment_losses',
         'reports': reports,
-        'grouped_losses': grouped_losses
+        'grouped_losses': grouped_losses,
     }
     return render(request, 'oryx_equipment_losses/reports.html', context=context)
+
+
+@login_required
+def oryx_losses_statistics(request):
+    reports = Report.objects.prefetch_related(
+        'report_losses',
+        'report_losses__vehicle__vehicle_category',
+        'report_losses__vehicle__country_made_icon'
+    ).all()
+
+    formatted_losses = []
+    for report in reports:
+        for loss in report.report_losses.all():
+            formatted_losses.append({
+                "name": loss.name,
+                "side": loss.side,
+                "category": loss.vehicle.vehicle_category.name,
+                "vehicle": loss.vehicle.name,
+                "date_added": str(report.report_date)
+            })
+
+    context = {
+        'title': 'oryx losses statistics',
+        'formatted_losses': formatted_losses
+    }
+    return render(request, 'oryx_equipment_losses/statistics.html', context=context)
 
 
 @login_required

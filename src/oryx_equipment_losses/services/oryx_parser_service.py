@@ -46,6 +46,7 @@ def parse_remote_oryx_page(parse_side: Literal['UA', 'RU']):
         soup = BeautifulSoup(response.text.replace('&nbsp;', ' ').replace('/>', '>'), 'html.parser')
         vehicle_categories_elements = soup.article.select('h3:has(+ ul)')
         losses = []
+        parsed_total_count = 0
         for vehicle_category_element in vehicle_categories_elements:
             vehicle_elements = vehicle_category_element.find_next_sibling('ul').find_all('li')
             for vehicle_element in vehicle_elements if vehicle_elements else []:
@@ -55,13 +56,27 @@ def parse_remote_oryx_page(parse_side: Literal['UA', 'RU']):
                         if loss_element:
                             loss_element_info = parse_loss_element_info(loss_element)
                             vehicle_category_info = parse_vehicle_category_info(vehicle_category_element.text)
-                            losses.append({
-                                'href': loss_element_info['href'],
-                                'name': loss_element_info['name'],
-                                'side': parse_side,
-                                'vehicle_name': get_vehicle_name(vehicle_element),
-                                'vehicle_country_made_icon': vehicle_element.find('img')['src'].strip(),
-                                'vehicle_category_name': vehicle_category_info['name'],
-                            })
+                            href = loss_element_info['href']
+                            name = loss_element_info['name']
+                            vehicle_name = get_vehicle_name(vehicle_element)
 
+                            # check if in array exist item with same name and parse_side and vehicle_name
+                            if_already_exist_element = any(
+                                name == loss['name'] and
+                                parse_side == loss['side'] and
+                                vehicle_name == loss['vehicle_name']
+                                for loss in losses
+                            )
+                            # if_already_exist_element = False
+                            if not if_already_exist_element:
+                                parsed_total_count += 1
+                                losses.append({
+                                    'href': href,
+                                    'name': name,
+                                    'side': parse_side,
+                                    'vehicle_name': vehicle_name,
+                                    'vehicle_country_made_icon': vehicle_element.find('img')['src'].strip(),
+                                    'vehicle_category_name': vehicle_category_info['name'],
+                                })
+        print('parsed total losses', parse_side, parsed_total_count)
         return losses

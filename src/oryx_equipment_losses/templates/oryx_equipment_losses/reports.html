@@ -1,12 +1,12 @@
 {% extends 'oryx_equipment_losses/main.html' %}
-{% load static %}
+{% load static oryx_filters %}
 
 {% block oryx_equipment_losses_content %}
     <form class="custom-form" method="post" action="{% url 'force_update_oryx_losses' %}">
         {% csrf_token %}
         <button class="custom-button" type="submit">Force update losses data</button>
     </form>
-
+<a href=" {% url 'oryx_losses_statistics' %}">Statistic</a>
     <div>
         <div class="reports-content">
         {% for side, side_data in grouped_losses.items %}
