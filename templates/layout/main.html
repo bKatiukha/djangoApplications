@@ -17,6 +17,7 @@
     <link href="{% sass_src 'shared/css/footer.scss' %}" rel="stylesheet" type="text/css"/>
     {% block headTags %} {% endblock %}
     <title> {% block pageTitle %} {% endblock %} </title>
+
 </head>
 <body>
     {% block header %}
@@ -31,6 +32,32 @@
     {% endblock footer %}
 </body>
 
+{% if request.user.is_authenticated %}
+    <script>
+        online_username = '{{ user.username }}';
+        let ws_scheme = window.location.protocol === "https:" ? "wss://" : "ws://";
+        console.log(ws_scheme);
+
+        onlineUsersSocket = new WebSocket(
+            ws_scheme
+            + window.location.host
+            + '/ws/online_user/'
+        );
+
+        onlineUsersSocket.onopen = event =>{
+            onlineUsersSocket.send(JSON.stringify({
+                type: 'login',
+                data: {
+                    name: online_username
+                }
+            }));
+            onlineUsersSocket.send(JSON.stringify({
+                type: 'get_online_users',
+                data: {}
+            }));
+        }
+    </script>
+{% endif %}
 {% block scripts %}{% endblock scripts %}
 
 </html>

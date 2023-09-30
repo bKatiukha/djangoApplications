@@ -18,6 +18,10 @@ NAVIGATION_ITEMS = [
     {
         'title': 'Oryx parser',
         'routerLink': 'oryx_equipment_losses'
+    },
+    {
+        'title': 'Oryx statistic',
+        'routerLink': 'oryx_losses_statistics'
     }
 ]
 

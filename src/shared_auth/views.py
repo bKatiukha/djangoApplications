@@ -20,7 +20,7 @@ class RegisterUserPage(DataMixin, CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        # UserProfile.objects.create(user=user)
+        UserProfile.objects.create(user=user)
         login(self.request, user)
         return redirect('blog')
 

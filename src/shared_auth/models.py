@@ -5,6 +5,7 @@ from django.db import models
 class UserProfile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to="photos/%Y/%m/%d/", blank=True, null=True, verbose_name='')
+    online_status = models.PositiveBigIntegerField(default=0)
 
     def __str__(self):
         return self.user.username

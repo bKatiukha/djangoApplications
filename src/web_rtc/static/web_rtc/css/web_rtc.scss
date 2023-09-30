@@ -1,3 +1,30 @@
+.online_users {
+  display: flex;
+  .online-user {
+  position: relative;
+  margin: 10px;
+  img {
+    width: 50px;
+    height: 50px;
+    opacity: .3;
+    border-radius: 50%;
+
+  }
+  div {
+    position: absolute;
+    top: 50%;
+    left: 38%;
+    font-size: 20px;
+    font-weight: bold;
+    color: #7845ac;
+    line-height: 0;
+    text-transform: capitalize;
+
+  }
+}
+}
+
+
 #call, #userInfo, #answer, #inCall, #calling, #videos {
   display: none;
 }

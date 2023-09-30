@@ -25,12 +25,13 @@ SECRET_KEY = 'django-insecure-xgipj1$k6b1hdq39xnby)l3=%a+@w8^4qjh#-d^9%^$y_9d%^z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', "localhost"]
-
+# ALLOWED_HOSTS = ['127.0.0.1', "localhost"]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'corsheaders',
 
     'src.blog',
     'src.web_rtc',
@@ -59,6 +61,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'src.web_rtc.middleware.DisableCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'app_config.urls'
@@ -100,8 +105,12 @@ ASGI_APPLICATION = "app_config.asgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'djangoApplications',
+        'USER': 'admin',
+        'PASSWORD': '2706Body!@',
+        'HOST': 'localhost',  # Use the appropriate host if MySQL is on a different server.
+        'PORT': '',           # Leave empty to use the default MySQL port (3306).
     }
 }
 
@@ -111,16 +120,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 8,  # Set the minimum password length to 8 characters
+        },
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'src.shared_auth.validators.UppercaseValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'src.shared_auth.validators.DigitValidator',
     },
 ]
 
@@ -160,13 +169,34 @@ MEDIA_URL = '/media/'
 
 LOGOUT_REDIRECT_URL = ''
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",  # Redis server host and port
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],  # Redis server host and port
+        },
+    },
 }
 
 
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+LOGIN_URL = 'login'
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+CSRF_TRUSTED_ORIGINS = ["https://fd89-176-36-121-190.ngrok-free.app"]

@@ -2,10 +2,12 @@
   margin-top: 50px;
   margin-bottom: 100px;
 }
-.base-statistics {
+.base-statistics, .categories-statistics {
   display: flex;
   justify-content: space-around;
   align-self: center;
+}
+.base-statistics {
   .pie-chart {
     height: 400px;
     width: 400px;
@@ -13,6 +15,12 @@
   }
   .line-chart{
     width: 800px;
+    margin: 40px auto;
+  }
+}
+.categories-statistics {
+  .line-chart{
+    width: 1200px;
     margin: 40px auto;
   }
 }

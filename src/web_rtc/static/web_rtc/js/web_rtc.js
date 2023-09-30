@@ -19,7 +19,7 @@ let otherUser = {
 
 const constraints = {
     video: true,
-    audio: false
+    audio: true
 };
 
 let pcConfig = {
@@ -96,7 +96,7 @@ function beReady() {
 
 let callSocket;
 function connectSocket() {
-    let ws_scheme = "ws://";
+    let ws_scheme = window.location.protocol === "https:" ? "wss://" : "ws://";
     console.log(ws_scheme);
 
     callSocket = new WebSocket(

@@ -5,13 +5,52 @@ document.addEventListener('DOMContentLoaded', function(){
     }
     const pieChartCanvas = document.getElementById('pieChart').getContext('2d');
     const lineChartCanvas = document.getElementById('lineChart').getContext('2d');
+    const line2ChartCanvas = document.getElementById('lineChart2').getContext('2d');
+    const line3ChartCanvas = document.getElementById('lineChart3').getContext('2d');
 
 
     const sortedReportDates = getSortedReportDates(losses)
     const formattedLossesCounts = getFormattedLossesCounts(losses, sortedReportDates, sides)
+    console.log(formattedLossesCounts);
     createSidesTotalLossesPieChart(pieChartCanvas, formattedLossesCounts, sides)
     createSidesAllLossesLineChart(lineChartCanvas, sides, formattedLossesCounts, 'total');
+
+    const allUaCategories = getAllCategoriesBySide(formattedLossesCounts, sides['UA'])
+    const allRuCategories = getAllCategoriesBySide(formattedLossesCounts, sides['RU'])
+    createSideCategoriesLossesLineChart(line2ChartCanvas, sides, formattedLossesCounts, allUaCategories, sides['UA']);
+    createSideCategoriesLossesLineChart(line3ChartCanvas, sides, formattedLossesCounts, allRuCategories, sides['RU']);
 });
+
+function getAllCategoriesBySide(formattedLossesCounts, side) {
+    const allUaCategories = []
+    for (const category in formattedLossesCounts[side][0]['counts']) {
+        if (category !== 'total') {
+            allUaCategories.push(category)
+        }
+    }
+    return allUaCategories
+}
+
+function createSideCategoriesLossesLineChart(canvas, sides, formattedLossesCounts, categories, side) {
+    const totalCategories = getCategoriesLosesForSide(formattedLossesCounts, categories, side)
+    const datasets = []
+    for (const category of categories) {
+        datasets.push({
+            label: category,
+            data: totalCategories[sides[side]][category],
+        })
+    }
+    new Chart(canvas, {
+        type: 'line',
+        data: {
+            datasets: datasets
+        },
+        options: {
+            ...getLineChartCategoriesOptions(),
+
+        }
+    });
+}
 
 function createSidesAllLossesLineChart(canvas, sides, formattedLossesCounts, category) {
     const totalCategoryLoses = getAllTotalCategoryLosesForSides(formattedLossesCounts, category)
@@ -37,41 +76,61 @@ function createSidesAllLossesLineChart(canvas, sides, formattedLossesCounts, cat
             }]
         },
         options: {
-            fill: false,
-            borderWidth: 6,
-            tension: 0.2,
-            elements: {
-                point: {
-                    radius: 1,
-                    hoverRadius: 6,
-                    hitRadius: 6,
-                }
-            },
-            scales: {
-                x: {
-                    type: 'time',
-                    parsing: false,
-                    time: {
-                      unit: 'quarter',
-                      displayFormats: {
-                          quarter: 'MMM yyyy',
-                          tooltipFormat:'MM/DD/YYYY'
-                      }
-                    },
+            ...getLineChartOptions(),
+        }
+    });
+}
+function getLineChartCategoriesOptions() {
+    return {
+        ...getLineChartOptions(),
+        borderWidth: 2,
+        tension: 0.2,
+        elements: {
+            point: {
+                radius: 1,
+                hoverRadius: 2,
+                hitRadius: 2,
+            }
+        },
+    }
+}
+
+function getLineChartOptions() {
+    return {
+        fill: false,
+        borderWidth: 6,
+        tension: 0.2,
+        elements: {
+            point: {
+                radius: 1,
+                hoverRadius: 6,
+                hitRadius: 6,
+            }
+        },
+        scales: {
+            x: {
+                type: 'time',
+                parsing: false,
+                time: {
+                  unit: 'quarter',
+                  displayFormats: {
+                      quarter: 'MMM yyyy',
+                      tooltipFormat:'MM/DD/YYYY'
+                  }
                 },
             },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        title: function(context) {
-                            const label = context[0].label
-                            return label.slice(0, label.lastIndexOf(','));
-                        }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(context) {
+                        const label = context[0].label
+                        return label.slice(0, label.lastIndexOf(','));
                     }
                 }
             }
-        },
-    });
+        }
+    }
 }
 
 function createSidesTotalLossesPieChart(canvas, formattedLossesCounts, sides) {
@@ -87,7 +146,8 @@ function createSidesTotalLossesPieChart(canvas, formattedLossesCounts, sides) {
                     backgroundColor: [
                         'rgb(54, 162, 235)',
                         'rgb(255, 99, 132)',
-                    ],borderColor: [
+                    ],
+                    borderColor: [
                         '#f8f8f873',
                         '#f8f8f873',
                     ],
@@ -125,6 +185,25 @@ function getAllTotalCategoryLosesForSides(formattedLossesCounts, category) {
         }
     }
     console.log(result);
+    return result
+}
+
+function getCategoriesLosesForSide(formattedLossesCounts, categories, side) {
+    const result = {}
+    result[side] = {}
+    for (const report of formattedLossesCounts[side]) {
+        for (const category of categories) {
+            if (!result[side][category]) {
+                result[side][category] = []
+            }
+
+            result[side][category].push({
+                x: report['date_added'],
+                y: report['counts'][category]
+            })
+        }
+    }
+    console.log('getCategoriesLosesForSide', result);
     return result
 }
 

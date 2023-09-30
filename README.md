@@ -1,4 +1,5 @@
  lsof -nti:8000 | xargs kill -9 
+ python manage.py reset_online_users
  python manage.py runserver 8000
 # Django applications 
 - ### Blog
@@ -20,17 +21,17 @@
 - [x] parse oryx war equipment losses by beautifulsoup4
 - [x] create normal form bd tables for parsed oryx data
 - [x] optimized SQL queries for parsed oryx data
+- [x] create statistic page for oryx war equipment losses with charts
+- [x] check video call in local network if it works using ngrok (not working p2p connection)
+- [x] display all online user (maybe use it for chats to make easier call)
 
 ### To-Do (not a requirements just ideas)
-- [ ] display all online user (maybe use it for chats to make easier call)
     
-- [ ] create statistic page for oryx war equipment losses with charts
 - [ ] auto get oryx data pace and save in bd (maybe use celery)
     
 - [ ] auto remove old chats rooms and messages (maybe use celery)   
 
 - [ ] todo add possibility to share screen on video call
-- [ ] check video call in local network if it works
 - [ ] create possibility call with many persons (create video chat room)
 - [ ] create normal visualization for video call for many persons on call
 - [ ] add buttons in video call to mute and not display video

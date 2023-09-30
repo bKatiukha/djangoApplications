@@ -82,16 +82,37 @@ def create_loss_if_not_exist(
 
     # Check if the name exists in the existing_losses
     for loss in existing_losses:
+        # if loss.href == href and loss.vehicle.name == loss_vehicle_name and loss.side == side and loss.name != name:
+        #     print('name different', loss.name, loss.vehicle.name, loss.side)
+        #     try:
+        #         existing_losses.remove(loss)
+        #         loss.name = name
+        #         loss.save()
+        #         existing_losses.add(loss)
+        #     except IntegrityError:
+        #         print("Error: can't update Loss href because of it will be duplication")
+        #         try:
+        #             loss.remove()
+        #         except:
+        #             print("Error:")
+        #     return existing_losses
         if loss.name == name and loss.vehicle.name == loss_vehicle_name and loss.side == side:
             if loss.href != href:
                 try:
+                    print('loss href update', loss.name, loss.vehicle.name, loss.side)
                     # if resource href change then update it
+                    print('updated_loss href update', loss.name, loss.report.report_date)
+                    existing_losses.remove(loss)
                     loss.href = href
-                    loss.report = loss.report
                     loss.save()
+                    existing_losses.add(loss)
                 except IntegrityError:
-                    print("Error: can't update Loss because of it will be duplication")
+                    print("Error: can't update Loss href because of it will be duplication")
                     print("Error for:", loss.vehicle.name, loss.href, loss.name)
+                    # try:
+                    #     loss.remove()
+                    # except:
+                    #     print("Error:")
             return existing_losses
 
     # If it doesn't exist, create a new Loss object
@@ -138,9 +159,9 @@ def save_parsed_data_to_bd(parsed_data):
     existing_losses = set(Loss.objects.prefetch_related('vehicle').all())
     # get current date report
     report = create_report_if_not_exist()
-
+    print('parsed_data length', len(parsed_data))
     for loss_item in parsed_data:
-        create_loss_if_not_exist(
+        existing_losses = create_loss_if_not_exist(
             loss_item,
             report,
             existing_losses,
@@ -157,7 +178,7 @@ def oryx_equipment_losses(request):
         'report_losses__vehicle__vehicle_category',
         'report_losses__vehicle__country_made_icon'
     ).all()
-
+    print('losses length', Loss.objects.count())
     current_date = timezone.now().date()
     current_date_report = [report for report in reports if report.report_date == current_date]
     if not current_date_report:

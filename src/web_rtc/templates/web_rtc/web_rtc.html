@@ -16,7 +16,8 @@
 
 {% block content %}
     <div class="web_rtc-content">
-
+        <div>All online users</div>
+        <div id="online_users" class="online_users"></div>
         <!-- to input username and login -->
         <div class="user-name-block" id="userName">
             <div>
@@ -96,6 +97,7 @@
 
 
 {% block scripts %}
+    <script src="{% static 'web_rtc/js/online_users.js' %}"></script>
     <script src="{% static 'web_rtc/js/web_rtc.js' %}"></script>
     <script>
         {% if user.username %}
