@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf.urls.static import static
 from app_config import settings
-from src.shared_auth.views import edit_profile
+from src.user_auth.views import edit_profile
 
 urlpatterns = [
     path('', edit_profile, name='edit_profile'),

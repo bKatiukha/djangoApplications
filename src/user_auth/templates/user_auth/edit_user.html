@@ -1,7 +1,7 @@
-{% extends 'shared/main.html' %}
+{% extends 'user_auth/main.html' %}
 {% load static %}
 
-{% block shared_auth_content %}
+{% block user_auth_content %}
     <form class="custom-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
@@ -55,4 +55,4 @@
         }
     });
     </script>
-{% endblock shared_auth_content %}
+{% endblock user_auth_content %}

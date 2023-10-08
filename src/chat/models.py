@@ -23,7 +23,7 @@ class Room(models.Model):
     messages = models.ManyToManyField(Message, blank=True)
 
     class Meta:
-        ordering = ('created_at',)
+        ordering = ('-created_at',)
 
     def get_absolute_url(self):
         return reverse('chat_uuid', kwargs={'uuid': self.uuid})

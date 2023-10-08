@@ -1,9 +1,10 @@
-{% extends 'shared/main.html' %}
+{% extends 'user_auth/main.html' %}
 
-{% block shared_auth_content %}
+{% block user_auth_content %}
     <form class="custom-form" method="post">
         {% csrf_token %}
-        <div class="form-title">Login</div>
+
+        <div class="form-title">Registration</div>
         <div class="form-error non-field-errors">{{ form.non_field_errors }}</div>
         {% for f in form %}
             <div class="form-field">
@@ -13,7 +14,7 @@
             </div>
         {% endfor %}
 
-        <button class="custom-button" type="submit"> Login </button>
+        <button class="custom-button" type="submit">Register</button>
     </form>
-{% endblock shared_auth_content %}
+{% endblock user_auth_content %}
 

@@ -2,15 +2,15 @@
 {% load static sass_tags %}
 
 {% block headTags %}
-    <link href="{% sass_src 'shared_auth/css/shared_auth.scss' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% sass_src 'user_auth/css/user_auth.scss' %}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block pageTitle %} {{ title }} {% endblock %}
 
 
 {% block content %}
     <div class="main-container">
-        {% block shared_auth_content %}
-        {% endblock shared_auth_content %}
+        {% block user_auth_content %}
+        {% endblock user_auth_content %}
     </div>
 
 {% endblock content %}

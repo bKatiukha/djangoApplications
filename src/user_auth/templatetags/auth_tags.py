@@ -26,7 +26,7 @@ NAVIGATION_ITEMS = [
 ]
 
 
-@register.inclusion_tag('shared/main_navigation.html')
+@register.inclusion_tag('user_auth/main_navigation.html')
 def main_navigation():
     return {"navItems": NAVIGATION_ITEMS}
 

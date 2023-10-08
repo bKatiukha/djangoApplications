@@ -10,7 +10,7 @@ from .forms import *
 
 class RegisterUserPage(DataMixin, CreateView):
     form_class = RegisterUserForm
-    template_name = 'shared/register.html'
+    template_name = 'user_auth/register.html'
     success_url = reverse_lazy('login')
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -27,7 +27,7 @@ class RegisterUserPage(DataMixin, CreateView):
 
 class LoginUserPage(DataMixin, LoginView):
     form_class = LoginUserForm
-    template_name = 'shared/login.html'
+    template_name = 'user_auth/login.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -78,4 +78,4 @@ def edit_profile(request):
         'profile_form': profile_form,
         'title': 'Edit profile'
     }
-    return render(request, 'shared/edit_user.html', context)
+    return render(request, 'user_auth/edit_user.html', context)

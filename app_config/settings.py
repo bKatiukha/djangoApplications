@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,17 +39,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
-    'corsheaders',
 
     'src.blog',
     'src.web_rtc',
-    'src.shared_auth',
+    'src.user_auth',
     'src.chat',
     'src.oryx_equipment_losses',
 
+    'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
+    'drf_yasg',
     'sass_processor',
     'channels',
+    'corsheaders',
+    'debug_toolbar',
 
 ]
 
@@ -74,7 +78,7 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
             os.path.join(BASE_DIR, 'src/blog', 'templates'),
-            os.path.join(BASE_DIR, 'src/shared_auth', 'templates'),
+            os.path.join(BASE_DIR, 'src/auth', 'templates'),
             os.path.join(BASE_DIR, 'src/web_rtc', 'templates'),
             os.path.join(BASE_DIR, 'src/chat', 'templates'),
             os.path.join(BASE_DIR, 'src/oryx_equipment_losses', 'templates'),
@@ -126,10 +130,10 @@ AUTH_PASSWORD_VALIDATORS = [
         },
     },
     {
-        'NAME': 'src.shared_auth.validators.UppercaseValidator',
+        'NAME': 'src.user_auth.validators.UppercaseValidator',
     },
     {
-        'NAME': 'src.shared_auth.validators.DigitValidator',
+        'NAME': 'src.user_auth.validators.DigitValidator',
     },
 ]
 
@@ -200,3 +204,34 @@ CORS_ALLOW_ALL_ORIGINS = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 CSRF_TRUSTED_ORIGINS = ["https://fd89-176-36-121-190.ngrok-free.app"]
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'PAGE_SIZE': 5,
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
+SWAGGER_SETTINGS = {
+    'DEFAULT_FIELD_INSPECTORS': [
+        'drf_yasg.inspectors.CamelCaseJSONFilter',
+        'drf_yasg.inspectors.InlineSerializerInspector',
+        'drf_yasg.inspectors.RelatedFieldInspector',
+        'drf_yasg.inspectors.ChoiceFieldInspector',
+        'drf_yasg.inspectors.FileFieldInspector',
+        'drf_yasg.inspectors.DictFieldInspector',
+        'drf_yasg.inspectors.SimpleFieldInspector',
+        'drf_yasg.inspectors.StringDefaultFieldInspector',
+    ],
+}

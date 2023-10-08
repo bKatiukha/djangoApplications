@@ -1,5 +1,5 @@
 from django.urls import path
-from src.shared_auth import consumers
+from src.user_auth import consumers
 from app_config import settings
 from django.conf.urls.static import static
 

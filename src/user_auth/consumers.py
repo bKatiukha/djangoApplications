@@ -5,7 +5,7 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from django.db.models import Q
 
-from src.shared_auth.models import UserProfile
+from src.user_auth.models import UserProfile
 
 
 class OnlineUserConsumer(WebsocketConsumer):
@@ -29,6 +29,9 @@ class OnlineUserConsumer(WebsocketConsumer):
         if self.user_name:
             try:
                 def user_left_task():
+                    # UserProfile matching query does not exist.
+                    print('UserProfile matching query does not exist.', self.user_name)
+                    print(UserProfile.objects.get(user__username=self.user_name))
                     user_profile = UserProfile.objects.get(user__username=self.user_name)
                     user_profile.online_status -= 1
                     user_profile.save()
@@ -119,4 +122,3 @@ class OnlineUserConsumer(WebsocketConsumer):
             'type': 'user_in',
             'data': event['data']
         }))
-
