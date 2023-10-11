@@ -5,4 +5,7 @@ urlpatterns = [
     path('rooms/', RoomListAPIView.as_view(), name='rooms'),
     path('user_rooms/', UserRoomsAPIView.as_view(), name='user_rooms'),
     path('create_room/', RoomCreateAPIView.as_view(), name='create_room'),
+    path('create_room/', RoomCreateAPIView.as_view(), name='create_room'),
+    path('room/<uuid:uuid>/', RoomDetailsAPIView.as_view(), name='room-details'),
+
 ]

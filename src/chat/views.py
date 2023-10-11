@@ -1,4 +1,6 @@
 import random
+
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django import forms
@@ -29,7 +31,7 @@ def chat(request):
                     uuid=guid()
                 )
                 return redirect(room.get_absolute_url())
-            except:
+            except IntegrityError:
                 form.add_error(None, 'Form validation error')
     else:
         form = ChatNameForm()
@@ -59,5 +61,3 @@ def chat_uuid(request, uuid):
         return render(request, 'chat/chat_uuid.html', context=context)
     except Room.DoesNotExist:
         return redirect('chat')
-
-

@@ -28,7 +28,6 @@ class AddPostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        # fields = '__all__' #not recommended
         fields = ['title', 'slug', 'content', 'photo', 'is_published', 'category']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-input'}),

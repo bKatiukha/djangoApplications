@@ -88,4 +88,3 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'type': event['type'],
             'data': event['data']
         }))
-

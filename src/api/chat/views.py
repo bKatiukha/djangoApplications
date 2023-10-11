@@ -3,9 +3,10 @@ import random
 from django.db.models import Q
 from requests import Response
 from rest_framework import generics, status
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from src.api.chat.serializers import RoomSerializer, CreateRoomSerializer
+from src.api.chat.serializers import RoomSerializer, CreateRoomSerializer, RoomDetailsSerializer
 from src.chat.models import Room
 
 
@@ -29,6 +30,13 @@ class RoomListAPIView(generics.ListAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     permission_classes = [IsAuthenticated]
+
+
+class RoomDetailsAPIView(RetrieveAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomDetailsSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'uuid'
 
 
 class RoomCreateAPIView(generics.CreateAPIView):

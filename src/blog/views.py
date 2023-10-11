@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import IntegrityError
 from django.http import HttpResponseNotFound
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView
@@ -90,7 +91,7 @@ def show_custom_add_page_form(request):
             try:
                 Post.objects.create(**form.cleaned_data)
                 return redirect('blog')
-            except:
+            except IntegrityError:
                 form.add_error(None, 'Form validation error')
     else:
         form = CustomAddPostForm()
