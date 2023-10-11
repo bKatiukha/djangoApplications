@@ -11,6 +11,8 @@ class RoomSerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
+    created_by = serializers.CharField(source='created_by.username')
+
     class Meta:
         model = Message
         fields = ['created_by', 'created_at', 'message']
