@@ -23,7 +23,7 @@ def is_need_update(reports) -> bool:
 
 
 # Create a dictionary to store losses grouped by report date, side, category, and vehicle
-def group_losses_for_display(reports) -> Dict[Any]:
+def group_losses_for_display(reports):
     grouped_losses = {}
 
     for report in reports:
