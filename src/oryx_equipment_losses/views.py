@@ -1,25 +1,10 @@
-from typing import Any, List, Dict
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.utils import timezone
 
 from src.oryx_equipment_losses.models import Loss, Report
 from src.oryx_equipment_losses.utils.oryx_data_processor import OryxDataProcessor
 from src.oryx_equipment_losses.utils.oryx_scraper import OryxScraper
-
-
-def get_all_reports():
-    return Report.objects.prefetch_related(
-        'report_losses',
-        'report_losses__vehicle__vehicle_category',
-        'report_losses__vehicle__country_made_icon'
-    ).all()
-
-
-def is_need_update(reports) -> bool:
-    current_date = timezone.now().date()
-    return not [report for report in reports if report.report_date == current_date]
+from src.oryx_equipment_losses.utils.oryx_utils import get_all_reports, is_need_update
 
 
 # Create a dictionary to store losses grouped by report date, side, category, and vehicle

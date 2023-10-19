@@ -2,17 +2,20 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from src.api.oryx.serializers import LossSerializer, GroupedLossesSerializer
-from src.oryx_equipment_losses.models import Report
+from src.api.oryx.serializers import LossSerializer
+from src.oryx_equipment_losses.utils.oryx_data_processor import OryxDataProcessor
+from src.oryx_equipment_losses.utils.oryx_scraper import OryxScraper
+from src.oryx_equipment_losses.utils.oryx_utils import get_all_reports, is_need_update
 
 
 class LossesStatisticsAPIView(APIView):
     def get(self, request):
-        reports = Report.objects.prefetch_related(
-            'report_losses',
-            'report_losses__vehicle__vehicle_category',
-            'report_losses__vehicle__country_made_icon'
-        ).all()
+        reports = get_all_reports()
+
+        if is_need_update(reports):
+            scraper = OryxScraper()
+            data_processor = OryxDataProcessor()
+            data_processor.save_parsed_data_to_db((scraper.scrape_oryx_sides()))
 
         formatted_losses = []
         for report in reports:
